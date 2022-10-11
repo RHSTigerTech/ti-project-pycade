@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Crocketdile')
 
 #load image
-bg = pygame.image.load('swamp.png').convert()
+bg = pygame.image.load('sewer.jpg').convert()
 bg_width = bg.get_width()
 #bg_rect = bg.get_rect()
 
