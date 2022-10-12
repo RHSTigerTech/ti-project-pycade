@@ -7,6 +7,9 @@ class Level:
     def __init__(self, leveldata, surface):
         self.displaysurface = surface
         self.leveldata = leveldata
+        self.world_shift = -5
+        self.player_sprite = 0
+
 
     def setupLevel(self, layout):
         self.tiles = pygame.sprite.Group()
@@ -24,12 +27,14 @@ class Level:
                     tile = Tile((x,y), tilesize)
                     self.tiles.add(tile)
                 elif cell == "P":
-                    player_sprite = Player((x,y))
-                    self.player.add(player_sprite)
+                    self.player_sprite = Player((x,y))
+                    self.player.add(self.player_sprite)
 
     def run(self):
-        self.tiles.update(10)
-        # self.tiles.update(10)
-        # self.tiles.update(10)
+        self.player_sprite.move()
+
+        self.tiles.update(self.world_shift)
+        self.player.update()
+
         self.tiles.draw(self.displaysurface)
         self.player.draw(self.displaysurface)

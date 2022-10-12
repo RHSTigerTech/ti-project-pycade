@@ -2,7 +2,7 @@ import pygame, sys
 from settings import *
 from levelselect import levelMap
 from level import Level
-from player import *
+from player import Player
 pygame.init()
 
 #New Variables:
@@ -31,21 +31,22 @@ TEMPGROUND = 74, 170, 189
 TestColor = 232,157,76
 
 #gameloop
-
+level = Level(levelMap, SCREEN)
+level.setupLevel(levelMap)
 
 while 1: # keeps gameloop running
     pygame.time.delay(40) # sets action delay
 
-    level = Level(levelMap, SCREEN)
-    level.setupLevel(levelMap)
+    
 
     SCREEN.fill(BLACK)
     level.run()
-    print("run")
+    # print("run")
     
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
             sys.exit()
+    
     
     pygame.display.update()
