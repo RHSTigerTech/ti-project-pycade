@@ -42,10 +42,22 @@ while run:
     if abs(scroll) > bg_width:
         scroll = 0
 
-    #event handler
+    #movement + event handler
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                print("Up arrow is pressed")
+            if event.key == pygame.K_DOWN:
+                print("Down arrow is pressed")
+            if event.key == pygame.K_ESCAPE:
+               run = False
+            if event.type == pygame.QUIT:
+                run = False
+
+
+
+
+
 
     pygame.display.update()
 
