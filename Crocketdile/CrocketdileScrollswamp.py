@@ -51,9 +51,8 @@ while run:
                 print("Down arrow is pressed")
             if event.key == pygame.K_ESCAPE:
                run = False
-            if event.type == pygame.QUIT:
-                run = False
-
+        elif event.type == pygame.QUIT:
+            run = False
 
 
 
