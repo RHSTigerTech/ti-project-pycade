@@ -30,9 +30,27 @@ class Level:
                     self.player_sprite = Player((x,y))
                     self.player.add(self.player_sprite)
 
-    def run(self):
-        self.player_sprite.move()
+    def scroll(self):
+        player = self.player_sprite
+        player_x = player.rect.centerx
+        direction_x = player.direction.x
 
+        if player_x < 200 and direction_x < 0:
+            self.world_shift = 8
+            player.speed = 0
+        elif player_x > 1000 and direction_x > 0:
+            self.world_shift = -8
+            player.speed = 0
+        else:
+            self.world_shift = 0
+            player.speed = 16
+            
+
+    def run(self):
+        self.player_sprite.apply_gravity()
+        self.player_sprite.key_input()
+
+        self.scroll()
         self.tiles.update(self.world_shift)
         self.player.update()
 

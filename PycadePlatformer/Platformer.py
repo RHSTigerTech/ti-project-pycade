@@ -16,13 +16,6 @@ playerWidth = 50
 playerHeight = 50
 jumpPower = 10
 
-#platform data variables
-
-
-
-#Static Variables:
-
-
 #Colors:
 
 BLACK = 0, 0, 0
@@ -35,7 +28,7 @@ level = Level(levelMap, SCREEN)
 level.setupLevel(levelMap)
 
 while 1: # keeps gameloop running
-    pygame.time.delay(40) # sets action delay
+    pygame.time.delay(40) # sets action delay 
 
     
 
