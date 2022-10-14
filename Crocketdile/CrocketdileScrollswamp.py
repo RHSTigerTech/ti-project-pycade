@@ -1,6 +1,8 @@
 import pygame
 import math
 
+from pygame import mixer
+
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -12,6 +14,10 @@ SCREEN_HEIGHT = 756
 #create game window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Crocketdile')
+
+#Background Sound
+mixer.music.load("Groovy-house-music.mp3")
+mixer.music.play(-1)
 
 #load image
 bg = pygame.image.load('sewer_V2.jpg').convert()
