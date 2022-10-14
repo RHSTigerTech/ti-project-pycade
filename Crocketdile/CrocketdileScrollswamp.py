@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Crocketdile')
 
 #load image
-bg = pygame.image.load('sewer.jpg').convert()
+bg = pygame.image.load('sewer_V2.jpg').convert()
 bg_width = bg.get_width()
 #bg_rect = bg.get_rect()
 
@@ -49,6 +49,10 @@ while run:
                 print("Up arrow is pressed")
             if event.key == pygame.K_DOWN:
                 print("Down arrow is pressed")
+            if event.key == pygame.K_SPACE:
+                print("Space Bar is pressed")
+            if event.key == pygame.K_e:
+                print("E key is pressed")
             if event.key == pygame.K_ESCAPE:
                run = False
         elif event.type == pygame.QUIT:
