@@ -13,8 +13,10 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0,0)
         self.can_jump = False
         self.jump_speed = -16
-        self.speed = 16
+        self.speed = 8
         self.gravity = 0.8
+
+        self.coin_count = 0
 
     def key_input(self):
         self.keys = pygame.key.get_pressed()
@@ -32,9 +34,9 @@ class Player(pygame.sprite.Sprite):
     def apply_gravity(self):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
-
-    def update(self):
-        self.rect.x += self.direction.x * self.speed
-
+        
+    def get_coin_count(self):
+        return self.coin_count
+    
     def jump(self):
         self.direction.y = self.jump_speed

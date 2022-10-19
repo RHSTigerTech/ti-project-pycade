@@ -30,7 +30,7 @@ level.setupLevel(levelMap)
 while 1: # keeps gameloop running
     pygame.time.delay(40) # sets action delay 
 
-    
+
 
     SCREEN.fill(BLACK)
     level.run()

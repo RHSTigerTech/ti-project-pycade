@@ -1,5 +1,6 @@
 import pygame
 from tiles import Tile
+from coins import Coin
 from settings import tilesize
 from player import *
 
@@ -7,13 +8,14 @@ class Level:
     def __init__(self, leveldata, surface):
         self.displaysurface = surface
         self.leveldata = leveldata
-        self.world_shift = -5
+        self.world_shift = -8
         self.player_sprite = 0
 
 
     def setupLevel(self, layout):
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.Group()
+        self.items = pygame.sprite.Group()
         tileYCount = -1
         for row in layout:
             tileXCount = -1
@@ -26,6 +28,15 @@ class Level:
                 if cell == "X":
                     tile = Tile((x,y), tilesize)
                     self.tiles.add(tile)
+                elif cell == "C":
+                    coin = Coin((x,y), 64, 1)
+                    self.items.add(coin)
+                elif cell == "M":
+                    coin = Coin((x,y), 64, 10)
+                    self.items.add(coin)
+                elif cell == "U":
+                    coin = Coin((x,y), 64, 100)
+                    self.items.add(coin)
                 elif cell == "P":
                     self.player_sprite = Player((x,y))
                     self.player.add(self.player_sprite)
@@ -35,24 +46,70 @@ class Level:
         player_x = player.rect.centerx
         direction_x = player.direction.x
 
-        if player_x < 200 and direction_x < 0:
+        if player_x < 350 and direction_x < 0:
             self.world_shift = 8
             player.speed = 0
-        elif player_x > 1000 and direction_x > 0:
+        elif player_x > 850 and direction_x > 0:
             self.world_shift = -8
             player.speed = 0
         else:
             self.world_shift = 0
             player.speed = 16
             
+    def horizontal_movement_collisions(self):
+        player = self.player_sprite
+        player.rect.x += player.direction.x * player.speed
+
+        for sprite in self.tiles.sprites():
+            if sprite.rect.colliderect(player.rect):    
+                    if player.direction.x < 0:
+                        player.rect.left = sprite.rect.right
+                        player.direction.x = 0
+                    elif player.direction.x > 0:
+                        player.rect.right = sprite.rect.left
+                        player.direction.x = 0
+
+    def vertical_movement_collisions(self):
+        player = self.player_sprite
+        self.player_sprite.apply_gravity()
+
+        for sprite in self.tiles.sprites():
+            if sprite.rect.colliderect(player.rect):
+                if player.direction.y < 0:
+                    player.rect.top = sprite.rect.bottom
+                    player.direction.y = 0
+                elif player.direction.y > 0:
+                    player.rect.bottom = sprite.rect.top
+                    player.direction.y = 0
+    
+    def item_collisions(self):
+        player = self.player_sprite
+
+        for sprite in self.items.sprites():
+            if sprite.rect.colliderect(player.rect):
+                self.player_sprite.coin_count += sprite.value
+                self.items.remove(sprite)
+
 
     def run(self):
-        self.player_sprite.apply_gravity()
+        
+        #level
+
+        #player
+        self.horizontal_movement_collisions()
         self.player_sprite.key_input()
+        self.vertical_movement_collisions()
+
+        self.item_collisions()
+
+        # print(self.player_sprite.get_coin_count())
 
         self.scroll()
         self.tiles.update(self.world_shift)
-        self.player.update()
+        self.items.update(self.world_shift)
+        
+        
 
         self.tiles.draw(self.displaysurface)
+        self.items.draw(self.displaysurface)
         self.player.draw(self.displaysurface)
