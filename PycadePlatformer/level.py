@@ -1,6 +1,7 @@
 import pygame
 from tiles import Tile
 from coins import Coin
+from ingame_menu import Ingame_Menu
 from settings import tilesize
 from player import *
 
@@ -11,8 +12,20 @@ class Level:
         self.world_shift = -8
         self.player_sprite = 0
 
+    def setupMenu(self):
+        self.menu = pygame.sprite.Group()
+        user_menu = [
+            ((0 ,0), '0', 64, 'numzero.png'),
+            ((64,0), '0', 64, 'numzero.png')
+        ]
+
+        for digit in user_menu:
+            menu_piece = Ingame_Menu(digit[0], digit[1], digit[2], digit[3])
+            self.menu.add(menu_piece)
+
 
     def setupLevel(self, layout):
+        self.setupMenu()
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
@@ -102,14 +115,12 @@ class Level:
 
         self.item_collisions()
 
-        # print(self.player_sprite.get_coin_count())
-
         self.scroll()
         self.tiles.update(self.world_shift)
         self.items.update(self.world_shift)
         
         
-
+        self.menu.draw(self.displaysurface)
         self.tiles.draw(self.displaysurface)
         self.items.draw(self.displaysurface)
         self.player.draw(self.displaysurface)
