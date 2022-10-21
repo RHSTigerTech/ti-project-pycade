@@ -8,6 +8,9 @@ pygame.init()
 clock = pygame.time.Clock()
 FPS = 60
 
+current_time = 0
+button_press_time = 0
+
 SCREEN_WIDTH = 1600
 SCREEN_HEIGHT = 756
 
@@ -20,12 +23,12 @@ mixer.music.load("Groovy-house-music.mp3")
 mixer.music.play(-1)
 
 #load image
-bg = pygame.image.load('sewer_V2.jpg').convert()
+bg = pygame.image.load('sewer_background.jpg').convert()
 bg_width = bg.get_width()
-#bg_rect = bg.get_rect()
 
 #define game variables
 scroll = 0
+dif = 4
 tiles = math.ceil(SCREEN_WIDTH / bg_width) + 1
 print(tiles)
 
@@ -38,11 +41,13 @@ while run:
     #draw scrolling background
     for i in range(0, tiles):
         screen.blit(bg, (i * bg_width + scroll, 0))
-       # bg_rect.x = i * bg_width + scroll
-       # pygame.draw.rect(screen, (255, 0, 0), bg_rect, 1)
     
-    #scroll background
-    scroll -= 5
+    #scroll background + speeds scroll
+    scroll -= dif
+    current_time = pygame.time.get_ticks()
+    if current_time % 5000 < 10:
+        dif += 1
+        print('Speed up by', dif,)
 
     #reset scroll
     if abs(scroll) > bg_width:
@@ -63,10 +68,6 @@ while run:
                run = False
         elif event.type == pygame.QUIT:
             run = False
-
-
-
-
 
     pygame.display.update()
 
