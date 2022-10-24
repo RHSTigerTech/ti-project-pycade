@@ -64,6 +64,7 @@ while run:
                 print("Space Bar is pressed")
             if event.key == pygame.K_e:
                 print("E key is pressed")
+                dif = 4
             if event.key == pygame.K_ESCAPE:
                run = False
         elif event.type == pygame.QUIT:
