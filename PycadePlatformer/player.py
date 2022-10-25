@@ -36,7 +36,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y
         
     def get_coin_count(self):
-        return self.coin_count
+        coins = str(self.coin_count)
+
+        while len(coins) < 3:
+            coins = '0' + coins
+
+        return coins
     
     def jump(self):
         self.direction.y = self.jump_speed
