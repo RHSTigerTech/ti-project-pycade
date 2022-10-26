@@ -7,9 +7,25 @@ class Ingame_Menu(pygame.sprite.Sprite):
 
         self.title = title
         self.text = text
-
+        self.pos = pos
         
 
+        self.load_file(self.text, self.pos)
+
+    def update(self, coin_count):
+        coins = coin_count
+        if self.title == 'coin_val100':
+            self.text = coins[2]
+        if self.title == 'coin_val10':
+            self.text = coins[1]
+        if self.title == 'coin_val1':
+            self.text = coins[0]
+        else:
+            self.text = '4'
+
+        self.load_file(self.text, self.pos)
+        
+    def load_file(self, text, pos):
         if text == '0':
             file = 'num_zero.png'
         elif text == '1':
@@ -30,21 +46,11 @@ class Ingame_Menu(pygame.sprite.Sprite):
             file = 'num_eight.png'
         elif text == '9':
             file = 'num_nine.png'
-        elif text == 'coin_icon':
+        elif text == 'coin':
             file = 'base_coin.png'
         else:
             file = 'num_three.png'
 
+
         self.image = pygame.image.load(file)
         self.rect = self.image.get_rect(topleft = pos)
-
-    def update(self, coin_count):
-        coins = coin_count
-        if self.title == 'coin_val100':
-            self.text = coins[2]
-        if self.title == 'coin_val10':
-            self.text = coins[1]
-        if self.title == 'coin_val1':
-            self.text = coins[0]
-        else:
-            self.text = '4'

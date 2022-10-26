@@ -15,7 +15,7 @@ class Level:
     def setupMenu(self):
         self.menu = pygame.sprite.Group()
         user_menu = [
-            ((4 ,4), 'coin', 32, 'coin_icon'),
+            ((4 ,4), 'coin', 32, 'coin'),
             ((36 ,4), '0', 32, 'coin_val100'),
             ((68,4), '0', 32, 'coin_val10'),
             ((100,4), '0', 32, 'coin_val1'),
