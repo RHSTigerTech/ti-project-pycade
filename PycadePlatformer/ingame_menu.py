@@ -8,6 +8,8 @@ class Ingame_Menu(pygame.sprite.Sprite):
         self.title = title
         self.text = text
 
+        
+
         if text == '0':
             file = 'num_zero.png'
         elif text == '1':
