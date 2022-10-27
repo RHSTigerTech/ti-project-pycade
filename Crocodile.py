@@ -5,7 +5,7 @@ import random
 pygame.init()
 
 SCREEN_WIDTH = 1800
-SCREEN_HEIGHT = 1000
+SCREEN_HEIGHT = 756
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('My Spritesheet Thingy')
@@ -17,12 +17,17 @@ Coin = pygame.image.load("Coin.png")
 x = 0
 y = 300
 STEP = 1
-COINMOVEY, COINMOVEX = random.randrange(0.1*SCREEN_HEIGHT,1*SCREEN_HEIGHT,STEP),1800
+COINMOVEY = 400
+COINMOVEX = 1800
+CoinSpot = random.randint(1, 3)
+print(CoinSpot)
+
+
 rect = sprite_sheet_image.get_rect()
 rect.center = (x, y)
 CoinRect = Coin.get_rect()
 CoinRect.center = (COINMOVEX, COINMOVEY)
-BG = (50, 50, 50)
+BG = pygame.image.load('sewer_background.jpg').convert()
 BLACK = (0, 0, 0)
 score = 0
 
@@ -49,8 +54,7 @@ print(animation_list)
 run = True
 while run:
 
-		#update background
-		screen.fill(BG)
+		COINMOVEX -= STEP
 
 		#update animation
 		current_time = pygame.time.get_ticks()
@@ -60,30 +64,47 @@ while run:
 			if frame >= len(animation_list[action]):
 				frame = 0
 
-		COINMOVEX -= STEP
-
 		if COINMOVEX <= -100:
-			COINMOVEX = 1800
-			COINMOVEY = random.randrange(0.1*SCREEN_HEIGHT,1*SCREEN_HEIGHT,STEP)
+			CoinSpot = random.randint(1, 3)
+			if CoinSpot == 1:
+				COINMOVEX = 1800
+				COINMOVEY = 250
+			if CoinSpot == 2:
+				COINMOVEX = 1800
+				COINMOVEY = 400
+			if CoinSpot == 3:
+				COINMOVEX = 1800
+				COINMOVEY = 520
 
-		if CoinRect.colliderect(rect):
-			COINMOVEX = 1800
-			COINMOVEY = random.randrange(0.1*SCREEN_HEIGHT,1*SCREEN_HEIGHT,STEP)
+		# Im the Coin Mechaninc dats unfinished, Uncomment me and I break your PC
+		# if COINMOVEX <= 400 and y == 300 and COINMOVEY == 250:
+		# 	print("Go Weegy is SO THICC")
+		# 	CoinSpot = random.randint(1, 3)
+		# 	if CoinSpot == 1:
+		# 		COINMOVEX = 1800
+		# 		COINMOVEY = 250
+		# 	if CoinSpot == 2:
+		# 		COINMOVEX = 1800
+		# 		COINMOVEY = 400
+		# 	if CoinSpot == 3:
+		# 		COINMOVEX = 1800
+		# 		COINMOVEY = 520
 
 		#show frame image
-		screen.blit(animation_list[action][frame], (x, y))
+		screen.blit(BG, (0, 0))
 		screen.blit(Coin, (COINMOVEX, COINMOVEY))
-	
+		screen.blit(animation_list[action][frame], (x, y))
+
 
 		#event handler
 		for event in pygame.event.get():
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_w]:
 				action = 1
-				y -= 50
+				y -= 65
 			if keys[pygame.K_s]:
 				action = 1
-				y += 50
+				y += 65
 			if keys[pygame.K_SPACE]:
 				action = 2
 			if event.type == pygame.QUIT:
