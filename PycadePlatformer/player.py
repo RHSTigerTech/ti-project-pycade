@@ -22,9 +22,9 @@ class Player(pygame.sprite.Sprite):
         self.keys = pygame.key.get_pressed()
 
         # if self.can_jump == False:
-        if self.keys[pygame.K_RIGHT]:
+        if self.keys[pygame.K_d]:
             self.direction.x = 1
-        elif self.keys[pygame.K_LEFT]:
+        elif self.keys[pygame.K_a]:
             self.direction.x = -1
         else:
             self.direction.x = 0

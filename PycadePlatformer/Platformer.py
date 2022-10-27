@@ -28,14 +28,14 @@ TestColor = 232,157,76
 
 #gameloop
 level = Level(levelMap, SCREEN)
-level.setupLevel(levelMap)
+level.setupLevel(levelMap, 'Grass')
 
 while 1: # keeps gameloop running
     pygame.time.delay(40) # sets action delay 
 
 
 
-    SCREEN.fill(BLACK)
+    SCREEN.fill(BLUE)
     level.run()
     # print("run")
     

@@ -15,13 +15,11 @@ class Ingame_Menu(pygame.sprite.Sprite):
     def update(self, coin_count):
         coins = coin_count
         if self.title == 'coin_val100':
-            self.text = coins[2]
+            self.text = coins[0]
         if self.title == 'coin_val10':
             self.text = coins[1]
         if self.title == 'coin_val1':
-            self.text = coins[0]
-        else:
-            self.text = '4'
+            self.text = coins[2]
 
         self.load_file(self.text, self.pos)
         

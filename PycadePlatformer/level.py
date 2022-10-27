@@ -26,7 +26,7 @@ class Level:
             self.menu.add(menu_piece)
 
 
-    def setupLevel(self, layout):
+    def setupLevel(self, layout, lev_type):
         self.setupMenu()
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.Group()
@@ -41,16 +41,23 @@ class Level:
                 x = tileXCount * tilesize
                 y = tileYCount * tilesize
                 if cell == "X":
-                    tile = Tile((x,y), tilesize)
+                    tile = Tile((x,y), tilesize, lev_type, "ground")
                     self.tiles.add(tile)
+                elif cell == "x":
+                    tile = Tile((x,y), tilesize, lev_type, "top")
                 elif cell == "C":
-                    coin = Coin((x,y), 64, 1)
+                    coin = Coin((x,y), 0, 1)
                     self.items.add(coin)
                 elif cell == "M":
-                    coin = Coin((x,y), 64, 10)
+                    coin = Coin((x,y), 0, 10)
                     self.items.add(coin)
-                elif cell == "U":
-                    coin = Coin((x,y), 64, 100)
+                elif cell == "O":
+                    coin = Coin((x,y), 0, 100)
+                    self.items.add(coin)
+                elif cell == "D":
+                    coin = Coin((x - 16,y), 64, 1)
+                    self.items.add(coin)
+                    coin = Coin((x + 16,y), 64, 1)
                     self.items.add(coin)
                 elif cell == "P":
                     self.player_sprite = Player((x,y))
