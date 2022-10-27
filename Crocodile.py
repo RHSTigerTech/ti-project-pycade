@@ -76,19 +76,40 @@ while run:
 				COINMOVEX = 1800
 				COINMOVEY = 520
 
-		# Im the Coin Mechaninc dats unfinished, Uncomment me and I break your PC
-		# if COINMOVEX <= 400 and y == 300 and COINMOVEY == 250:
-		# 	print("Go Weegy is SO THICC")
-		# 	CoinSpot = random.randint(1, 3)
-		# 	if CoinSpot == 1:
-		# 		COINMOVEX = 1800
-		# 		COINMOVEY = 250
-		# 	if CoinSpot == 2:
-		# 		COINMOVEX = 1800
-		# 		COINMOVEY = 400
-		# 	if CoinSpot == 3:
-		# 		COINMOVEX = 1800
-		# 		COINMOVEY = 520
+
+		if COINMOVEX <= 400 and y == 170 and COINMOVEY == 250:
+			CoinSpot = random.randint(1, 3)
+			if CoinSpot == 1:
+				COINMOVEX = 1800
+				COINMOVEY = 250
+			if CoinSpot == 2:
+				COINMOVEX = 1800
+				COINMOVEY = 400
+			if CoinSpot == 3:
+				COINMOVEX = 1800
+				COINMOVEY = 520
+		if COINMOVEX <= 400 and y == 300 and COINMOVEY == 400:
+			CoinSpot = random.randint(1, 3)
+			if CoinSpot == 1:
+				COINMOVEX = 1800
+				COINMOVEY = 250
+			if CoinSpot == 2:
+				COINMOVEX = 1800
+				COINMOVEY = 400
+			if CoinSpot == 3:
+				COINMOVEX = 1800
+				COINMOVEY = 520
+		if COINMOVEX <= 400 and y == 430 and COINMOVEY == 520:
+			CoinSpot = random.randint(1, 3)
+			if CoinSpot == 1:
+				COINMOVEX = 1800
+				COINMOVEY = 250
+			if CoinSpot == 2:
+				COINMOVEX = 1800
+				COINMOVEY = 400
+			if CoinSpot == 3:
+				COINMOVEX = 1800
+				COINMOVEY = 520
 
 		#show frame image
 		screen.blit(BG, (0, 0))
