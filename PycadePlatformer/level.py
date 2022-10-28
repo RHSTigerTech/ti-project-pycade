@@ -45,6 +45,7 @@ class Level:
                     self.tiles.add(tile)
                 elif cell == "x":
                     tile = Tile((x,y), tilesize, lev_type, "top")
+                    self.tiles.add(tile)
                 elif cell == "C":
                     coin = Coin((x,y), 0, 1)
                     self.items.add(coin)

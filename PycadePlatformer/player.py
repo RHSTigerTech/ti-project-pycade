@@ -7,8 +7,8 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
 
-        self.image = pygame.Surface((32, 64))
-        self.image.fill(PINK)
+        self.image = pygame.image.load('chad_idle_front.png')
+
         self.rect = self.image.get_rect(topleft = pos)
         self.direction = pygame.math.Vector2(0,0)
         self.can_jump = False
@@ -24,12 +24,15 @@ class Player(pygame.sprite.Sprite):
         # if self.can_jump == False:
         if self.keys[pygame.K_d]:
             self.direction.x = 1
+            self.image = pygame.image.load('chad_idle_front.png')
         elif self.keys[pygame.K_a]:
             self.direction.x = -1
+            self.image = pygame.image.load('chad_idle_back.png')
         else:
             self.direction.x = 0
         if self.keys[pygame.K_SPACE]:
             self.jump()
+            self.image = pygame.image.load('chad_jumping_front.png')
             
     def apply_gravity(self):
         self.direction.y += self.gravity

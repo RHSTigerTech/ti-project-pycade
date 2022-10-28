@@ -19,7 +19,7 @@ class Coin(pygame.sprite.Sprite):
             self.image = pygame.image.load('mega_coin.png')
             self.pos = pos
         else:
-            self.image = pygame.image.load('num_zero.png')
+            self.image = pygame.image.load('omega_coin.png')
 
         self.rect = self.image.get_rect(topleft = self.pos)
 
