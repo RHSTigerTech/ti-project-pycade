@@ -54,6 +54,7 @@ print(animation_list)
 run = True
 while run:
 
+		#Makes the Coin Move
 		COINMOVEX -= STEP
 
 		#update animation
@@ -64,6 +65,7 @@ while run:
 			if frame >= len(animation_list[action]):
 				frame = 0
 
+		#If the coin reaches the edge of the screen then randomly choose a new lane to respawn
 		if COINMOVEX <= -100:
 			CoinSpot = random.randint(1, 3)
 			if CoinSpot == 1:
@@ -77,6 +79,7 @@ while run:
 				COINMOVEY = 520
 
 
+		#If Crockettdile and Coin are in the same lane then randomly choose another lane to spawn in
 		if COINMOVEX <= 400 and y == 170 and COINMOVEY == 250:
 			CoinSpot = random.randint(1, 3)
 			if CoinSpot == 1:
@@ -111,13 +114,25 @@ while run:
 				COINMOVEX = 1800
 				COINMOVEY = 520
 
+		#If Crockettdile is trying to go past the top or bottom lane then stay in the same lane as it is
+		if y <= 170:
+			y = 170
+		if y >= 430:
+			y = 430
+
+		#If Crockettdile is trying get between two lanes then just dont let him
+		if y == 235:
+			y = 300 or 170
+		if y == 365:
+			y = 300 or 430
+
 		#show frame image
 		screen.blit(BG, (0, 0))
 		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(animation_list[action][frame], (x, y))
 
 
-		#event handler
+		#event handler and Crockettdile Movement
 		for event in pygame.event.get():
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_w]:
