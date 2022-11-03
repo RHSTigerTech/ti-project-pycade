@@ -33,6 +33,11 @@ class Player(pygame.sprite.Sprite):
         self.speed_x = 0
         self.speed = 8
     
+    def shoot_bullet(self):
+        b = Bullet(self.rect.centerx, self.rect.top)
+        all_bullets.add(b)
+        all_sprites.add(b)
+    
     def boundary(self):
         if self.rect.right > WIDTH:
              self.rect.right = WIDTH
@@ -81,6 +86,78 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.y += self.speed_y
         self.rect.x += self.speed_x
         self.boundary()
+
+class Bullet(pygame.sprite.Sprite):
+
+    def __init__(self, x, y): #X and Y repersents middle of ship
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((10, 20))
+        self.image.fill(YELLOW)
+        self.rect = self.image.get_rect()
+        self.rect.x = -10  
+        self.rect.x = x
+        self.rect.y = y 
+        self.speed_y = -10    
+
+    def update(self):
+        self.rect.y += self.speed_y                                                                     
+#Functions
+def spawn_new_wolf():
+    w = Wolf()
+    all_wolfs.add(w)
+    all_sprites.add(w)
+
+#sprites
+all_sprites = pygame.sprite.Group()
+all_wolfs = pygame.sprite.Group() #Group the wolfs
+all_bullets = pygame.sprite.Group()
+player = Player()
+all_sprites.add(player)
+
+for i in range(5):
+    spawn_new_wolf()
+
+
+#Main game loop
+running = True
+while running:
+    #Game runs at 60 FPS
+    clock.tick(FPS)
+
+    #Check for event:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYUP     :
+            if event.key == pygame.K_SPACE:
+               player.shoot_bullet()
+
+
+    #Update
+    all_sprites.update()
+
+
+    #if wolf hits tiger
+    wolf_collision = pygame.sprite.spritecollide(player, all_wolfs, False)
+    if wolf_collision:
+        running = False
+
+    #if bullet hits wolf
+    bullet_collision = pygame.sprite.groupcollide(all_wolfs, all_bullets, True, True)
+    for collision in bullet_collision:
+        spawn_new_wolf()
+
+
+
+
+    #Draw to the screen:
+    screen.fill(GREEN)
+    all_sprites.draw(screen)
+
+    #Updte adter drawing everything to screen
+    pygame.display.update()
+
+pygame.quit()
 
 
 #Functions
