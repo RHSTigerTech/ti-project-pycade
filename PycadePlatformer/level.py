@@ -1,10 +1,11 @@
 import pygame
 from tiles import Tile
+from enemie import Enemy
 from coins import Coin
 from ingame_menu import Ingame_Menu
 from settings import *
 from player import *
-
+from enemie import *
 class Level:
     def __init__(self, leveldata, surface):
         self.displaysurface = surface
@@ -31,6 +32,7 @@ class Level:
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
+        self.mobs = pygame.sprite.Group()
         tileYCount = -1
         for row in layout:
             tileXCount = -1
@@ -63,6 +65,9 @@ class Level:
                 elif cell == "P":
                     self.player_sprite = Player((x,y))
                     self.player.add(self.player_sprite)
+                elif cell == 'S':
+                    mob = Enemy((x,y), 'S3AN')
+                    self.mobs.add(mob)
 
     def scroll(self):
         player = self.player_sprite
@@ -82,6 +87,7 @@ class Level:
     def horizontal_movement_collisions(self):
         player = self.player_sprite
         player.rect.x += player.direction.x * player.speed
+        
 
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):    
@@ -91,6 +97,19 @@ class Level:
                     elif player.direction.x > 0:
                         player.rect.right = sprite.rect.left
                         player.direction.x = 0
+
+        for sprite_mob in self.mobs.sprites():
+            for sprite in self.tiles.sprites():
+                if sprite.rect.colliderect(sprite_mob.rect):
+                    if sprite_mob.collide() == 'left':
+                        sprite_mob.rect.left = sprite.rect.right
+                        sprite_mob.direction.x = 0
+                    elif sprite_mob.collide() == 'right':
+                        sprite_mob.rect.right = sprite.rect.left
+                        sprite_mob.direction.x = 0
+                else:
+                    sprite_mob.rect.x += sprite_mob.direction.x * sprite_mob.speed
+                    pass
 
     def vertical_movement_collisions(self):
         player = self.player_sprite
@@ -114,7 +133,6 @@ class Level:
                 self.items.remove(sprite)
 
 
-
     def run(self):
         
         #level
@@ -129,9 +147,9 @@ class Level:
         self.scroll()
         self.tiles.update(self.world_shift)
         self.items.update(self.world_shift)
-        
+        self.mobs.update(self.world_shift)
+
         #draw the menu
-        print(self.player_sprite.get_coin_count())
         self.menu.update(self.player_sprite.get_coin_count())
         pygame.draw.rect(self.displaysurface, GREY, ((0,0),(1200,40)))
         self.menu.draw(self.displaysurface)
@@ -139,3 +157,4 @@ class Level:
         self.tiles.draw(self.displaysurface)
         self.items.draw(self.displaysurface)
         self.player.draw(self.displaysurface)
+        self.mobs.draw(self.displaysurface)

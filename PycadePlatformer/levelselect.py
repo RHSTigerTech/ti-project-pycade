@@ -3,8 +3,8 @@ levelMap = ['                                                                   
             '                                                                      ',
             '                                                                      ',
             '   xx         xx                                                      ',
-            '         P  xx    DC                                                  ',
+            '          P xx    DC                                                  ',
             '       x  xxXX    xx  xx                                              ',
             '       X  XXXX    XX  XXx             C  M  O                         ',
-            '    xxxX  XXXXxx  XX  XXXx                                            ',
-            'xxxxXXXX  XXXXXX  XX  XXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']
+            'xS  xxxX  XXXXxx  XX  XXXx  S   x                                     ',
+            'xxxxXXXX  XXXXXX  XX  XXXXxxxxxxXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']

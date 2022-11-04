@@ -2,7 +2,6 @@ import pygame, sys, os
 from settings import *
 from levelselect import levelMap
 from level import Level
-from player import Player
 pygame.init()
 
 os.chdir('Plat_images')
@@ -11,7 +10,6 @@ os.chdir('Plat_images')
 #New Variables:
 
 level = Level(levelMap, SCREEN)
-
 #Player Dimensions
 playerX = 400
 playerY = 100
