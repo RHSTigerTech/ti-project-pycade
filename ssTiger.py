@@ -1,6 +1,8 @@
 import pygame
 import time
 import random
+from os import path
+
 
 #Colors:
 WHITE = (255, 255, 255)
@@ -13,25 +15,27 @@ YELLOW = (255, 255, 0)
 #settings:
 pygame.init()
 pygame.mixer.init()
-WIDTH = 480
+WIDTH = 480 
 HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tiger Shooter!")
 clock = pygame.time.Clock()
 FPS = 60
+game_folder = path.dirname(__file__)
+sprite_folder = path.join(game_folder, "Sprites")
 
 #Classes
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self): 
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 30))
-        self.image.fill(BLACK)
+        # self.image = pygame.Surface((50, 30))  
+        self.image = pygame.image.load('tiger.png')
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH/2
         self.rect.bottom = HEIGHT - 10
         self.speed_x = 0
-        self.speed = 8
+        self.speed = 8 
     
     def shoot_bullet(self):
         b = Bullet(self.rect.centerx, self.rect.top)
@@ -92,7 +96,7 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y): #X and Y repersents middle of ship
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((10, 20))
-        self.image.fill(YELLOW)
+        self.image = pygame.image.load("fireball.png ")
         self.rect = self.image.get_rect()
         self.rect.x = -10  
         self.rect.x = x
@@ -106,6 +110,16 @@ def spawn_new_wolf():
     w = Wolf()
     all_wolfs.add(w)
     all_sprites.add(w)
+
+
+def get_image(filename):
+    img = pygame.image.load(path.join(sprite_folder, filename)).convert()
+    return img
+#Images
+background = get_image("background.jpg")
+background_rect = background.get_rect()
+player_img = get_image("tiger.png")
+bullet_img = get_image("fireball.png")
 
 #sprites
 all_sprites = pygame.sprite.Group()
@@ -128,7 +142,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYUP     :
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                player.shoot_bullet()
 
@@ -137,12 +151,12 @@ while running:
     all_sprites.update()
 
 
-    #if wolf hits tiger
+    #if wolf hits tiger 
     wolf_collision = pygame.sprite.spritecollide(player, all_wolfs, False)
     if wolf_collision:
         running = False
 
-    #if bullet hits wolf
+       #if bullet hits wolf
     bullet_collision = pygame.sprite.groupcollide(all_wolfs, all_bullets, True, True)
     for collision in bullet_collision:
         spawn_new_wolf()
@@ -151,56 +165,10 @@ while running:
 
 
     #Draw to the screen:
-    screen.fill(GREEN)
+    screen.blit(background, background_rect) 
     all_sprites.draw(screen)
-
+   
     #Updte adter drawing everything to screen
     pygame.display.update()
 
-pygame.quit()
-
-
-#Functions
-
-#sprites
-all_sprites = pygame.sprite.Group()
-all_wolfs = pygame.sprite.Group() #Group the wolfs
-player = Player()
-all_sprites.add(player)
-
-for i in range(5):
-    w = Wolf()
-    all_wolfs.add(w)
-    all_sprites.add(w)
-
-
-#Main game loop
-running = True
-while running:
-    #Game runs at 60 FPS
-    clock.tick(FPS)
-
-    #Check for event:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-
-    #Update
-    all_sprites.update()
-
-    #if wolf hits tiger
-
-    wolf_collision = pygame.sprite.spritecollide(player, all_wolfs, False)
-    if wolf_collision:
-        running = False
-
-
-    #Draw to the screen:
-    screen.fill(GREEN)
-    all_sprites.draw(screen)
-
-    #Updte adter drawing everything to screen
-    pygame.display.update()
-
-pygame.quit()
+pygame.quit()    
