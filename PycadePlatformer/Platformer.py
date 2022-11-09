@@ -1,11 +1,12 @@
 import pygame, sys, os
+#imports from other files
 from settings import *
 from levelselect import levelMap
 from level import Level
-pygame.init()
 
-os.chdir('Plat_images')
+pygame.init() #initialize pygame
 
+os.chdir('Plat_images') #find all files 
 
 #New Variables:
 
@@ -31,16 +32,15 @@ level.setupLevel(levelMap, 'Grass')
 while 1: # keeps gameloop running
     pygame.time.delay(40) # sets action delay 
 
-
-
+    #Sets Screen Background
     SCREEN.fill(BLUE)
-    level.run()
-    # print("run")
+    level.run() #level creation / level running
     
+    #quit the game
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
             sys.exit()
     
-    
+    #update the display
     pygame.display.update()

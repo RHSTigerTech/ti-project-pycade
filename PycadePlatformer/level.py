@@ -68,6 +68,9 @@ class Level:
                 elif cell == 'S':
                     mob = Enemy((x,y), 'S3AN')
                     self.mobs.add(mob)
+                elif cell == 'w':
+                    mob = Enemy((x,y), 'weegy')
+                    self.mobs.add(mob)
 
     def scroll(self):
         player = self.player_sprite
@@ -87,8 +90,10 @@ class Level:
     def horizontal_movement_collisions(self):
         player = self.player_sprite
         player.rect.x += player.direction.x * player.speed
+        for mob in self.mobs.sprites():
+                mob.rect.x += mob.direction.x * mob.speed
         
-
+        #Player vs Tiles - No Death
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):    
                     if player.direction.x < 0:
@@ -97,24 +102,29 @@ class Level:
                     elif player.direction.x > 0:
                         player.rect.right = sprite.rect.left
                         player.direction.x = 0
-
+        #Mobs vs Tiles
         for sprite_mob in self.mobs.sprites():
             for sprite in self.tiles.sprites():
                 if sprite.rect.colliderect(sprite_mob.rect):
-                    if sprite_mob.collide() == 'left':
+                    if sprite_mob.direction.x < 0:
                         sprite_mob.rect.left = sprite.rect.right
-                        sprite_mob.direction.x = 0
-                    elif sprite_mob.collide() == 'right':
+                        sprite_mob.direction.x = 1      
+                    elif sprite_mob.direction.x > 0:
                         sprite_mob.rect.right = sprite.rect.left
-                        sprite_mob.direction.x = 0
-                else:
-                    sprite_mob.rect.x += sprite_mob.direction.x * sprite_mob.speed
-                    pass
+                        sprite_mob.direction.x = -1
 
+        #Player vs Mobs - Death
+        for mob in self.mobs.sprites():
+            if player.rect.colliderect(mob):
+                player.damage(1)
+                    
     def vertical_movement_collisions(self):
         player = self.player_sprite
         self.player_sprite.apply_gravity()
+        for mob in self.mobs.sprites():
+            mob.apply_gravity()
 
+        #Player vs Tiles - No death
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y < 0:
@@ -123,6 +133,26 @@ class Level:
                 elif player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.direction.y = 0
+        #Mob vs Tiles
+        for mob in self.mobs.sprites():
+            for sprite in self.tiles.sprites():
+                if mob.rect.colliderect(sprite):
+                    if mob.direction.y < 0:
+                        mob.rect.top = sprite.rect.bottom
+                        mob.direction.y = 0
+                    elif mob.direction.y > 0:
+                        mob.rect.bottom = sprite.rect.top
+                        mob.direction.y = 0
+
+        #Player Vs Mobs - Killing Mobs/Death
+        for mob in self.mobs.sprites():
+            
+            if player.rect.colliderect(mob):
+                #Enemy falls on head
+                if player.direction.y <= 0:
+                    player.damage(1)
+                elif player.direction.y > 0.8:
+                    mob.remove(self.mobs)
     
     def item_collisions(self):
         player = self.player_sprite
@@ -138,6 +168,7 @@ class Level:
         #level
 
         #player
+
         self.horizontal_movement_collisions()
         self.player_sprite.key_input()
         self.vertical_movement_collisions()
@@ -145,6 +176,7 @@ class Level:
         self.item_collisions()
 
         self.scroll()
+        self.player_sprite.immune()
         self.tiles.update(self.world_shift)
         self.items.update(self.world_shift)
         self.mobs.update(self.world_shift)

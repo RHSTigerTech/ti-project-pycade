@@ -3,7 +3,7 @@ from settings import *
 
 PINK = 255, 8, 255
 CHADWALKRIGHT = ('chad_right_walk1.png', 'chad_right_walk2.png', 'chad_right_walk3.png', 'chad_idle_front.png')
-
+BASEHEALTH = 3
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
@@ -14,13 +14,16 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2(0,0)
         self.can_jump = False
         self.crouching = False
+        self.i_frame = False
         self.jump_speed = -16
         self.speed = 8
         self.gravity = 0.8
+        self.health = BASEHEALTH
 
         self.coin_count = 0
         #counters
         self.walking_count = 0
+        self.i_frame_count = 0
 
     def key_input(self):
         self.keys = pygame.key.get_pressed()
@@ -98,3 +101,24 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
+
+    def damage(self, amount):
+        if self.i_frame == False:
+            self.health -= amount
+            self.i_frame_count = 30
+            self.i_frame = True
+            print('hit')
+        if self.health < 1:
+            print('Full Death')
+
+            
+
+
+
+
+    def immune(self):
+        
+        if self.i_frame_count == 0:
+            self.i_frame = False
+        else:
+            self.i_frame_count -= 1
