@@ -23,6 +23,8 @@ clock = pygame.time.Clock()
 FPS = 60
 game_folder = path.dirname(__file__)
 sprite_folder = path.join(game_folder, "Sprites")
+score = 0
+font_name = pygame.font.match_font("comicsansms")
 
 #Classes
 class Player(pygame.sprite.Sprite):
@@ -58,7 +60,11 @@ class Player(pygame.sprite.Sprite):
             self.speed_x = -self.speed
         self.rect.x += self.speed_x
     
-
+    def WL(self):
+        if score == 100:
+         self.image = pygame.image.load("TigerW.jpg")
+         
+         
 
     def update(self):
         self.movement()  
@@ -69,7 +75,7 @@ class Wolf(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((30, 30))
-        self.image.fill(RED)
+        self.image = pygame.image.load('swolf.png') 
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(0, WIDTH - self.rect.width)
         self.rect.y = random.randrange(-150, -100)
@@ -115,12 +121,26 @@ def spawn_new_wolf():
 def get_image(filename):
     img = pygame.image.load(path.join(sprite_folder, filename)).convert()
     return img
+
+
+def message_to_screen(message, color, font_size, x, y):
+    font = pygame.font.SysFont(font_name, font_size)
+    text = font.render(message, True, color)
+    text_rect = text.get_rect()
+    text_rect.center = (x, y)
+    screen.blit(text, text_rect)
+
+ 
 #Images
 background = get_image("background.jpg")
 background_rect = background.get_rect()
 player_img = get_image("tiger.png")
 bullet_img = get_image("fireball.png")
+wolf_img = get_image("swolf.png")
+wolfL = get_image("wolfL.png")
+TigerW = get_image("TigerW.jpg")
 
+     
 #sprites
 all_sprites = pygame.sprite.Group()
 all_wolfs = pygame.sprite.Group() #Group the wolfs
@@ -130,8 +150,8 @@ all_sprites.add(player)
 
 for i in range(5):
     spawn_new_wolf()
-
-
+   
+    
 #Main game loop
 running = True
 while running:
@@ -145,7 +165,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                player.shoot_bullet()
-
+           
 
     #Update
     all_sprites.update()
@@ -154,21 +174,33 @@ while running:
     #if wolf hits tiger 
     wolf_collision = pygame.sprite.spritecollide(player, all_wolfs, False)
     if wolf_collision:
-        running = False
+        screen.blit(TigerW, (200, 40))  
+        # running = False
+        
 
        #if bullet hits wolf
     bullet_collision = pygame.sprite.groupcollide(all_wolfs, all_bullets, True, True)
     for collision in bullet_collision:
         spawn_new_wolf()
+        score += 10      
 
 
 
-
+    if score >= 10:
+        player.WL()
+        screen.blit(TigerW, (170, 320))
+        screen.blit(background, background_rect)
+        time.sleep(2)
+        running = False
+        
+    
     #Draw to the screen:
     screen.blit(background, background_rect) 
     all_sprites.draw(screen)
+    message_to_screen("Score: " + str(score), WHITE, 24, WIDTH/2, 10) 
    
+
     #Updte adter drawing everything to screen
     pygame.display.update()
 
-pygame.quit()    
+pygame.quit()                         
