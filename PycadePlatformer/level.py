@@ -33,6 +33,7 @@ class Level:
         self.player = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
         self.mobs = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
         tileYCount = -1
         for row in layout:
             tileXCount = -1
@@ -156,18 +157,46 @@ class Level:
     
     def item_collisions(self):
         player = self.player_sprite
-
+        #move bullets
+        for bullet in self.bullets.sprites():
+            bullet.rect.x += bullet.direction * bullet.speed        
+        #coin / powerups
         for sprite in self.items.sprites():
             if sprite.rect.colliderect(player.rect):
                 self.player_sprite.coin_count += sprite.value
                 self.items.remove(sprite)
+        #bullets hitting walls
+        for bullet in self.bullets.sprites():
+            for tile in self.tiles.sprites():
+                if bullet.rect.colliderect(tile.rect):
+                    self.bullets.remove(bullet)
+                    print('remove bullet')
+        #bullet hitting player
+        for bullet in self.bullets.sprites():
+            if bullet.rect.colliderect(player.rect):
+                player.damage(1)
+                self.bullets.remove(bullet)
+        
+
+    def attacks(self):
+
+        #add bullets to screen
+        for mob in self.mobs.sprites():
+            if mob.attack() == True:
+                if mob.type == 'weegy':
+                    projectile = Projectile(mob.pos, 'peely', mob.direction.x, 5)
+                    self.bullets.add(projectile)
+                    print('add bullet')
+                
 
 
+        
     def run(self):
         
         #level
 
         #player
+        self.attacks()
 
         self.horizontal_movement_collisions()
         self.player_sprite.key_input()
@@ -190,3 +219,4 @@ class Level:
         self.items.draw(self.displaysurface)
         self.player.draw(self.displaysurface)
         self.mobs.draw(self.displaysurface)
+        self.bullets.draw(self.displaysurface)

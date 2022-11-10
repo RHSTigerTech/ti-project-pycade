@@ -4,7 +4,7 @@ from settings import *
 class Ingame_Menu(pygame.sprite.Sprite):
     def __init__(self, pos, text, size, title):
         super().__init__()
-
+ 
         self.title = title
         self.text = text
         self.pos = pos
