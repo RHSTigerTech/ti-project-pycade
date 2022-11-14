@@ -55,7 +55,7 @@ sgX = 123456
 sgY = 10
 CarX = 1500
 CarY = 200
-
+is_eating = False
 
 
 
@@ -65,6 +65,7 @@ CoinRect = Coin.get_rect()
 CoinRect.center = (COINMOVEX, COINMOVEY)
 BLACK = (0, 0, 0)
 health_value = 3
+cooldown = False
 
 #Score
 score_value = 0
@@ -90,6 +91,8 @@ scroll = 0
 dif = 4
 tiles = math.ceil(SCREEN_WIDTH / bg_width) + 1
 print(tiles)
+max_slow_down = 200
+slow_down_time = max_slow_down
 
 #create animation list
 animation_list = []
@@ -109,12 +112,22 @@ for animation in animation_steps:
 
 print(animation_list)
 
+def slow_down(slow):
+	if slow > 0:
+		slow -= 1
+		return slow
+	else:
+		return slow
+
+
 run = True
 while run:
 
+		# pygame.time.delay(20)
+
 		clock.tick(FPS)
 
-		print(Trash1X)
+		# print(Trash1X)
 		
 		#scroll background + speeds scroll
 		scroll -= dif
@@ -162,7 +175,7 @@ while run:
 				COINMOVEY = 520
 		
 		if CarX <= -250:
-			NewCar = random.randint(1, 2)
+			NewCar = random.randint(5, 6)
 			if NewCar == 1:
 				CarX = 5500
 				CarY = 200
@@ -182,6 +195,24 @@ while run:
 				CarY = 460
 				MeatX = 3000
 				MeatY = 444
+			if NewCar == 4:
+				CarX = 5500
+				CarY = 200
+				Trash1X = 5500
+				Trash1Y = 460
+			if NewCar == 5:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+			if NewCar == 6:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+				MeatX = 5000
+				MeatY = 444
+
 		
 		#If meat goes off screen
 		if MeatX <= -150:
@@ -446,13 +477,26 @@ while run:
 		for event in pygame.event.get():
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_w]:
-				action = 1
 				y -= 65
 			if keys[pygame.K_s]:
-				action = 1
 				y += 65
+
+			#eating motion
 			if keys[pygame.K_SPACE]:
-				action = 2
+				# print('space')
+				if cooldown == False:
+					if is_eating == True:
+						action = 1
+						is_eating = False
+						cooldown = True
+
+					elif is_eating == False:
+						action = 2
+						is_eating = True
+						cooldown = True
+				else:
+					cooldown = False
+			
 			if event.type == pygame.QUIT:
 				run = False
 					
