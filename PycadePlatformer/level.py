@@ -72,6 +72,8 @@ class Level:
                 elif cell == 'w':
                     mob = Enemy((x,y), 'weegy')
                     self.mobs.add(mob)
+                elif cell == '0':
+                    tile = Tile((x,y + 64), tilesize, lev_type, "death")
 
     def scroll(self):
         player = self.player_sprite
@@ -89,20 +91,29 @@ class Level:
             player.speed = 16
             
     def horizontal_movement_collisions(self):
+        hit = False
         player = self.player_sprite
         player.rect.x += player.direction.x * player.speed
         for mob in self.mobs.sprites():
                 mob.rect.x += mob.direction.x * mob.speed
+            
         
-        #Player vs Tiles - No Death
+        #Player vs Tiles
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):    
-                    if player.direction.x < 0:
-                        player.rect.left = sprite.rect.right
-                        player.direction.x = 0
-                    elif player.direction.x > 0:
-                        player.rect.right = sprite.rect.left
-                        player.direction.x = 0
+                if player.direction.x < 0:
+                    player.rect.left = sprite.rect.right
+                    player.direction.x = 0
+                    hit = True
+                elif player.direction.x > 0:
+                    player.rect.right = sprite.rect.left
+                    player.direction.x = 0
+                    hit = True
+                if sprite.type == '0' and hit == True:
+                    player.health = 0
+                    self.player.remove(player)
+            hit = False
+
         #Mobs vs Tiles
         for sprite_mob in self.mobs.sprites():
             for sprite in self.tiles.sprites():
@@ -184,7 +195,7 @@ class Level:
         for mob in self.mobs.sprites():
             if mob.attack() == True:
                 if mob.type == 'weegy':
-                    projectile = Projectile(mob.pos, 'peely', mob.direction.x, 5)
+                    projectile = Projectile((mob.rect.x, mob.rect.y + 25), 'peely', mob.direction.x, 5)
                     self.bullets.add(projectile)
                     print('add bullet')
                 
@@ -209,6 +220,7 @@ class Level:
         self.tiles.update(self.world_shift)
         self.items.update(self.world_shift)
         self.mobs.update(self.world_shift)
+        self.bullets.update(self.world_shift)
 
         #draw the menu
         self.menu.update(self.player_sprite.get_coin_count())

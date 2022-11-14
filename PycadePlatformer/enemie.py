@@ -28,7 +28,7 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load('weegy_gun.png')
             #stats
             self.speed = 0
-            self.max_attack_cooldown = 10
+            self.max_attack_cooldown = 25
         else:
             self.image = pygame.image.load('num_zero.png')
 
