@@ -1,48 +1,61 @@
 import pygame
+#import classes
+from settings import *
 from tiles import Tile
 from enemie import Enemy
 from coins import Coin
 from ingame_menu import Ingame_Menu
-from settings import *
-from player import *
-from enemie import *
+from player import Player
+from enemie import Enemy
+from projectiles import Projectile
+
 class Level:
     def __init__(self, leveldata, surface):
+        #set up all variables
         self.displaysurface = surface
         self.leveldata = leveldata
         self.world_shift = -8
         self.player_sprite = 0
 
+    #draw the upper screen menu
     def setupMenu(self):
         self.menu = pygame.sprite.Group()
+        #the layout of the menu
         user_menu = [
             ((4 ,4), 'coin', 32, 'coin'),
             ((36 ,4), '0', 32, 'coin_val100'),
             ((68,4), '0', 32, 'coin_val10'),
             ((100,4), '0', 32, 'coin_val1'),
         ]
-
+        #add all values to group
         for digit in user_menu:
             menu_piece = Ingame_Menu(digit[0], digit[1], digit[2], digit[3])
             self.menu.add(menu_piece)
 
-
+    #setup a level
     def setupLevel(self, layout, lev_type):
-        self.setupMenu()
+    #variables
+        #Groups
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
         self.mobs = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
+        #offseting the y value because [0] is first value
         tileYCount = -1
+        #setup upper menu
+        self.setupMenu()
+
+        #turns strings in list into cells on the level
         for row in layout:
             tileXCount = -1
             tileYCount += 1
             for cell in row:
                 tileXCount += 1
-                # print(tileXCount)
+                #multiplys pos by tilesize to get proper grid
                 x = tileXCount * tilesize
                 y = tileYCount * tilesize
+                #puts proper objects in tile spaces based on a value
                 if cell == "X":
                     tile = Tile((x,y), tilesize, lev_type, "ground")
                     self.tiles.add(tile)
@@ -73,47 +86,49 @@ class Level:
                     mob = Enemy((x,y), 'weegy')
                     self.mobs.add(mob)
                 elif cell == '0':
-                    tile = Tile((x,y + 64), tilesize, lev_type, "death")
+                    tile = Tile((x,y + 64), tilesize, lev_type, '0')
+                    self.tiles.add(tile)
 
+    #level scroll
     def scroll(self):
+        #shortened down variables
         player = self.player_sprite
         player_x = player.rect.centerx
         direction_x = player.direction.x
 
-        if player_x < 350 and direction_x < 0:
-            self.world_shift = 8
-            player.speed = 0
-        elif player_x > 850 and direction_x > 0:
-            self.world_shift = -8
-            player.speed = 0
-        else:
-            self.world_shift = 0
-            player.speed = 16
-            
+        if player.health > 0: #if player isn't dead
+            #if player is near edge, scroll screen instead of move player
+            if player_x < 350 and direction_x < 0:
+                self.world_shift = 8
+                player.speed = 0
+            elif player_x > 850 and direction_x > 0:
+                self.world_shift = -8
+                player.speed = 0
+            else: #player moves, not scroll
+                self.world_shift = 0
+                player.speed = 16
+    #check for horizontal collisions       
     def horizontal_movement_collisions(self):
-        hit = False
         player = self.player_sprite
-        player.rect.x += player.direction.x * player.speed
+        if player.health > 0:
+            player.rect.x += player.direction.x * player.speed
         for mob in self.mobs.sprites():
                 mob.rect.x += mob.direction.x * mob.speed
             
         
         #Player vs Tiles
         for sprite in self.tiles.sprites():
-            if sprite.rect.colliderect(player.rect):    
-                if player.direction.x < 0:
+            if sprite.rect.colliderect(player.rect):
+                if sprite.type == '0':
+                    player.health = 0
+                    self.player.remove(player)    
+                elif player.direction.x < 0:
                     player.rect.left = sprite.rect.right
                     player.direction.x = 0
-                    hit = True
                 elif player.direction.x > 0:
                     player.rect.right = sprite.rect.left
                     player.direction.x = 0
-                    hit = True
-                if sprite.type == '0' and hit == True:
-                    player.health = 0
-                    self.player.remove(player)
-            hit = False
-
+                
         #Mobs vs Tiles
         for sprite_mob in self.mobs.sprites():
             for sprite in self.tiles.sprites():
@@ -129,7 +144,7 @@ class Level:
         for mob in self.mobs.sprites():
             if player.rect.colliderect(mob):
                 player.damage(1)
-                    
+    #check for vertical collisions                
     def vertical_movement_collisions(self):
         player = self.player_sprite
         self.player_sprite.apply_gravity()
@@ -139,7 +154,10 @@ class Level:
         #Player vs Tiles - No death
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
-                if player.direction.y < 0:
+                if sprite.type == '0':
+                    player.health = 0
+                    self.player.remove(player)
+                elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
                 elif player.direction.y > 0:
@@ -165,7 +183,7 @@ class Level:
                     player.damage(1)
                 elif player.direction.y > 0.8:
                     mob.remove(self.mobs)
-    
+    #check for collecting items
     def item_collisions(self):
         player = self.player_sprite
         #move bullets
@@ -187,8 +205,7 @@ class Level:
             if bullet.rect.colliderect(player.rect):
                 player.damage(1)
                 self.bullets.remove(bullet)
-        
-
+    #check for an enemy attack
     def attacks(self):
 
         #add bullets to screen
@@ -198,25 +215,22 @@ class Level:
                     projectile = Projectile((mob.rect.x, mob.rect.y + 25), 'peely', mob.direction.x, 5)
                     self.bullets.add(projectile)
                     print('add bullet')
-                
 
-
-        
+    #run the game    
     def run(self):
         
-        #level
-
-        #player
-        self.attacks()
-
+        #collisions and movement
         self.horizontal_movement_collisions()
         self.player_sprite.key_input()
         self.vertical_movement_collisions()
-
         self.item_collisions()
-
         self.scroll()
+
+        #Run Attacks
+        self.attacks()
         self.player_sprite.immune()
+
+        #update objects
         self.tiles.update(self.world_shift)
         self.items.update(self.world_shift)
         self.mobs.update(self.world_shift)
@@ -227,6 +241,7 @@ class Level:
         pygame.draw.rect(self.displaysurface, GREY, ((0,0),(1200,40)))
         self.menu.draw(self.displaysurface)
 
+        #draw everything else
         self.tiles.draw(self.displaysurface)
         self.items.draw(self.displaysurface)
         self.player.draw(self.displaysurface)

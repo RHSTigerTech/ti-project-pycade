@@ -1,19 +1,23 @@
 import pygame
+#import classes
 from settings import *
 
 class Ingame_Menu(pygame.sprite.Sprite):
     def __init__(self, pos, text, size, title):
         super().__init__()
  
+        #turn inputed values into interal variables
         self.title = title
         self.text = text
         self.pos = pos
         
-
+        #find the right file for the right space
         self.load_file(self.text, self.pos)
 
+    #update the menu
     def update(self, coin_count):
         coins = coin_count
+        #set spacing on each value
         if self.title == 'coin_val100':
             self.text = coins[0]
         if self.title == 'coin_val10':
@@ -21,6 +25,7 @@ class Ingame_Menu(pygame.sprite.Sprite):
         if self.title == 'coin_val1':
             self.text = coins[2]
 
+        #find the file for the new values
         self.load_file(self.text, self.pos)
         
     def load_file(self, text, pos):
@@ -46,9 +51,9 @@ class Ingame_Menu(pygame.sprite.Sprite):
             file = 'num_nine.png'
         elif text == 'coin':
             file = 'base_coin.png'
-        else:
+        else: #Backup error file
             file = 'num_three.png'
 
-
+        #set image and hitbox to selected file
         self.image = pygame.image.load(file)
         self.rect = self.image.get_rect(topleft = pos)

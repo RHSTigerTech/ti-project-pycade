@@ -1,4 +1,5 @@
 import pygame
+#import classes
 from settings import *
 
 class Coin(pygame.sprite.Sprite):
@@ -13,6 +14,7 @@ class Coin(pygame.sprite.Sprite):
         self.pos[0] += 16
         self.pos[1] += 16
         
+        #set coin texture set on coin value
         if str(self.value) == '1':
             self.image = pygame.image.load('single_coin.png')
         elif str(self.value) == '10':
@@ -21,8 +23,12 @@ class Coin(pygame.sprite.Sprite):
         else:
             self.image = pygame.image.load('omega_coin.png')
 
+
+        #set hitbox
         self.rect = self.image.get_rect(topleft = self.pos)
 
 
+
+    #updates coin based on level scrolling
     def update(self, x_shift):
         self.rect.x += x_shift

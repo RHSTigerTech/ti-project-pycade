@@ -1,20 +1,26 @@
 import pygame
+#import classes
 from settings import *
-from projectiles import Projectile
+
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, type):
         super().__init__()
 
+    #Variables
+        #turn inputed values into interal variables
         self.type = type
         self.pos = [pos[0], pos[1]]
+
+        #track enemy direction for movement
         self.direction = pygame.math.Vector2(0,0)
         self.direction.x = -1
 
+        #set rate of gravity
         self.gravity = 0.8
-        self.max_attack_cooldown = 0
 
-        self.bullets = pygame.sprite.Group()
+        #for some enemy's to change rate of fire
+        self.max_attack_cooldown = 0
 
         #ememy selector
         if self.type == 'S3AN':
@@ -28,23 +34,27 @@ class Enemy(pygame.sprite.Sprite):
             self.image = pygame.image.load('weegy_gun.png')
             #stats
             self.speed = 0
-            self.max_attack_cooldown = 25
-        else:
+            self.max_attack_cooldown = 100
+
+        else: #just in case of mis-spelling or error
             self.image = pygame.image.load('num_zero.png')
 
+        #set the attack cooldown to the max, ready for use
         self.attack_cooldown = self.max_attack_cooldown
 
-
+        #set hitbox of enemy
         self.rect = self.image.get_rect(topleft = self.pos)
 
+    #update position based on level scrolling
     def update(self, x_shift):
         self.rect.x += x_shift
 
-
+    #applies gravity to enemies that need it
     def apply_gravity(self):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
     
+    #determines if it is time for an ememy to attack w/ attack cooldown
     def attack(self):
         if self.type == 'weegy':
             self.attack_cooldown -= 1
@@ -55,11 +65,3 @@ class Enemy(pygame.sprite.Sprite):
                 return False
         else:
             return False
-
-
-
-
-
-
-        # bullet = Projectile(self.pos, 'peely', self.direction.x)
-        # self.bullets.add(bullet)

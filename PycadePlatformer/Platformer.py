@@ -1,5 +1,5 @@
 import pygame, sys, os
-#imports from other files
+#import classes
 from settings import *
 from levelselect import levelMap
 from level import Level
@@ -8,29 +8,22 @@ pygame.init() #initialize pygame
 
 os.chdir('Plat_images') #find all files 
 
-#New Variables:
+#Variables:
 
-level = Level(levelMap, SCREEN)
-#Player Dimensions
+#Initial Player Dimensions
 playerX = 400
 playerY = 100
 playerWidth = 50
 playerHeight = 50
 jumpPower = 10
 
-#Colors:
-
-BLACK = 0, 0, 0
-PINK = 255, 8, 255
-TEMPGROUND = 74, 170, 189
-TestColor = 232,157,76
-
-#gameloop
+#testing level setup
 level = Level(levelMap, SCREEN)
 level.setupLevel(levelMap, 'Grass')
 
-while 1: # keeps gameloop running
-    pygame.time.delay(40) # sets action delay 
+while 1: # keeps gameloop running until game over
+
+    pygame.time.delay(40) # sets action delay and slows down code for more responsive
 
     #Sets Screen Background
     SCREEN.fill(BLUE)
