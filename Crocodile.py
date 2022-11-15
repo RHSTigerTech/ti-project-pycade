@@ -9,7 +9,8 @@ pygame.init()
 
 SCREEN_WIDTH = 1800
 SCREEN_HEIGHT = 756
-
+# really important update
+print("This was super important")
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('The Crockettdile')
 
