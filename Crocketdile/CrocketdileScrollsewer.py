@@ -1,5 +1,4 @@
-import pygame
-import math
+import pygame, math
 
 from pygame import mixer
 
@@ -19,8 +18,8 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Crocketdile')
 
 #Background Sound
-mixer.music.load("Groovy-house-music.mp3")
-mixer.music.play(-1)
+# mixer.music.load("Groovy-house-music.mp3")
+# mixer.music.play(-1)
 
 #load image
 bg = pygame.image.load('sewer_background.jpg').convert()

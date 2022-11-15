@@ -1,11 +1,12 @@
-import pygame
+import pygame, random, math, os
 import Crocodile2
-import random
-import math
 
-from pygame import mixer
+# from pygame import mixer
 
 pygame.init()
+
+#redirects file finder to folder
+os.chdir('Crocketdile_images')
 
 SCREEN_WIDTH = 1800
 SCREEN_HEIGHT = 756
@@ -25,6 +26,8 @@ SewerPipe2 = pygame.image.load("sewerPipe2.png")
 SewerLadder = pygame.image.load("sewerLadder.png")
 SeanGraffiti = pygame.image.load("seanGraffiti.png")
 HalfaCar = pygame.image.load("halfAcar.png")
+GoWeegyGo = pygame.image.load("Wedgysavehim.png")
+Heart = pygame.image.load("heart.png")
 
 clock = pygame.time.Clock()
 FPS = 60
@@ -39,7 +42,7 @@ COINMOVEX = 1800
 MeatX = 1000
 MeatY = 900
 Trash1X = 1000
-Trash1Y = 200
+Trash1Y = -2000
 Trash2X = 1000
 Trash2Y = -305
 CoinSpot = random.randint(1, 3)
@@ -53,10 +56,12 @@ LadderX = 1200
 LadderY = -2
 sgX = 123456
 sgY = 10
-CarX = 1500
-CarY = 200
-is_eating = False
-
+CarX = 200
+CarY = 80200
+WedgyX = 1800
+WedgyY = 2285
+HeartX = -100
+HeartY = -40
 
 
 rect = sprite_sheet_image.get_rect()
@@ -66,21 +71,22 @@ CoinRect.center = (COINMOVEX, COINMOVEY)
 BLACK = (0, 0, 0)
 health_value = 3
 cooldown = False
+is_eating = False
 
 #Score
 score_value = 0
 font = pygame.font.Font('freesansbold.ttf', 50)
 textX = 10
-textXX = 10
+textXX = 110
 textY = 10
-textYY = 60
+textYY = 80
 
 def show_score (textX, textY):
 	score = font.render("Score : " + str(score_value),True, (255, 255, 255))
 	screen.blit(score, (textX, textY))
 
 def show_health (textXX, textYY):
-	Health = font.render("Health : " + str(health_value),True, (255, 255, 255))
+	Health = font.render(str(health_value),True, (255, 0, 0))
 	screen.blit(Health, (textXX, textYY))
 
 bg = pygame.image.load('sewer_background.jpg').convert()
@@ -151,6 +157,7 @@ while run:
 		CarX -= dif
 		Trash1X -= dif
 		Trash2X -= dif
+		WedgyX -= dif
 
 
 		#update animation
@@ -175,7 +182,7 @@ while run:
 				COINMOVEY = 520
 		
 		if CarX <= -250:
-			NewCar = random.randint(5, 6)
+			NewCar = random.randint(8, 9)
 			if NewCar == 1:
 				CarX = 5500
 				CarY = 200
@@ -185,11 +192,15 @@ while run:
 				Trash1Y = 460
 				Trash2X = 4444
 				Trash2Y = 328
+				WedgyX = 2800
+				WedgyY = 186
 			if NewCar == 2:
 				CarX = 6000
 				CarY = 330
 				MeatX = 5000
 				MeatY = 580
+				WedgyX = 1700
+				WedgyY = 320
 			if NewCar == 3:
 				CarX = 7000
 				CarY = 460
@@ -212,6 +223,28 @@ while run:
 				Trash2Y = 328
 				MeatX = 5000
 				MeatY = 444
+			if NewCar == 7:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 328
+			if NewCar == 8:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+			if NewCar == 9:
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+				WedgyX = 1700
+				WedgyY = 444
+				
 
 		
 		#If meat goes off screen
@@ -349,7 +382,10 @@ while run:
 		if CarX <= 300 and y == 170 and CarY == 200:
 			dif = 4
 			score_value -= 15
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 			NewCar = random.randint(1, 3)
 			if NewCar == 1:
 				CarX = 5000
@@ -369,7 +405,10 @@ while run:
 		if CarX <= 300 and y == 300 and CarY == 330:
 			dif = 4
 			score_value -= 15
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 			NewCar = random.randint(1, 3)
 			if NewCar == 1:
 				CarX = 5000
@@ -389,7 +428,10 @@ while run:
 		if CarX <= 300 and y == 430 and CarY == 460:
 			dif = 4
 			score_value -= 15
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 			NewCar = random.randint(1, 3)
 			if NewCar == 1:
 				CarX = 5000
@@ -411,29 +453,47 @@ while run:
 		if Trash1X <= 400 and y == 170 and Trash1Y == 200:
 			Trash1Y = -250
 			dif = 4
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 		if Trash1X <= 400 and y == 300 and Trash1Y == 340:
 			Trash1Y = -250
 			dif = 4
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 		if Trash1X <= 400 and y == 430 and Trash1Y == 460:
 			Trash1Y = -250
 			dif = 4
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 
 		#If touching Trash2 (The alcohol pile)
 		if Trash2X <= 400 and y == 170 and Trash2Y == 195:
 			Trash2Y = -250
 			dif = 4
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 		if Trash2X <= 400 and y == 300 and Trash2Y == 328:
 			Trash2Y = -250
 			dif = 4
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 		if Trash2X <= 400 and y == 430 and Trash2Y == 450:
 			Trash2Y = -250
 			dif = 4
-			health_value -= 1
+			if action == 1:
+				health_value -= 1
+			elif action == 2:
+				health_value -= 3
 
 
 		#If Crockettdile is trying to go past the top or bottom lane then stay in the same lane as it is
@@ -458,16 +518,19 @@ while run:
 		screen.blit(SewerPipe, (Pipe1X, Pipe1Y))
 		screen.blit(Trash2, (Trash2X, Trash2Y))
 		screen.blit(Trash1, (Trash1X, Trash1Y))
+		screen.blit(GoWeegyGo, (WedgyX, WedgyY))
 		screen.blit(HalfaCar, (CarX, CarY))
 		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(Meat, (MeatX, MeatY))
 		screen.blit(animation_list[action][frame], (x, y))
+		screen.blit(Heart, (HeartX, HeartY))
 
 		if health_value <= 0:
 			dif = 0
 			scroll = 0
 			bg = pygame.image.load('gameOver_screen.jpg').convert()
 			bg_width = bg.get_width()
+
 
 			COINMOVEX = 10000
 			COINMOVEY = 250
@@ -499,9 +562,9 @@ while run:
 			
 			if event.type == pygame.QUIT:
 				run = False
-					
+
 		show_score(textX, textY)
-		show_health(textX, textYY)
+		show_health(textXX, textYY)
 		pygame.display.update()
 
 pygame.quit()
