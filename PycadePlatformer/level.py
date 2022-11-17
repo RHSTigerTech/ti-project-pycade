@@ -62,6 +62,9 @@ class Level:
                 elif cell == "x":
                     tile = Tile((x,y), tilesize, lev_type, "top")
                     self.tiles.add(tile)
+                elif cell == 'b':
+                    tile = Tile((x,y), tilesize, lev_type, "bridge")
+                    self.tiles.add(tile)
                 elif cell == "C":
                     coin = Coin((x,y), 0, 1)
                     self.items.add(coin)
@@ -75,6 +78,9 @@ class Level:
                     coin = Coin((x - 16,y), 64, 1)
                     self.items.add(coin)
                     coin = Coin((x + 16,y), 64, 1)
+                    self.items.add(coin)
+                elif cell == 'p':
+                    coin = Coin((x,y), 64, 'plunger')
                     self.items.add(coin)
                 elif cell == "P":
                     self.player_sprite = Player((x,y))
@@ -106,7 +112,10 @@ class Level:
                 player.speed = 0
             else: #player moves, not scroll
                 self.world_shift = 0
-                player.speed = 16
+                if player.falling == False:
+                    player.speed = 8
+                elif player.direction.y < 0:
+                    player.speed = 6
     #check for horizontal collisions       
     def horizontal_movement_collisions(self):
         player = self.player_sprite
@@ -163,6 +172,7 @@ class Level:
                 elif player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.direction.y = 0
+                    player.falling = False
         #Mob vs Tiles
         for mob in self.mobs.sprites():
             for sprite in self.tiles.sprites():
@@ -192,7 +202,10 @@ class Level:
         #coin / powerups
         for sprite in self.items.sprites():
             if sprite.rect.colliderect(player.rect):
-                self.player_sprite.coin_count += sprite.value
+                if sprite.value == 'plunger':
+                    pass
+                else:
+                    self.player_sprite.coin_count += sprite.value
                 self.items.remove(sprite)
         #bullets hitting walls
         for bullet in self.bullets.sprites():

@@ -15,10 +15,14 @@ class Player(pygame.sprite.Sprite):
         self.can_jump = False
         self.crouching = False
         self.i_frame = False
-        self.jump_speed = -16
-        self.speed = 8
-        self.gravity = 0.8
+        self.jump_speed = -28
+        self.speed = PLAYERSPEED
+        self.gravity = 3
         self.health = BASEHEALTH
+        self.falling = False
+
+        self.status = 'chad' #powerup status
+        self.shield = 0 #extra health
 
         self.coin_count = 0
         #counters
@@ -40,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         if self.keys[pygame.K_SPACE]:
             if self.crouching == True:
                 pass
-            elif self.direction.y == 0:
+            elif self.falling == False:
                 self.jump()
                 self.image = pygame.image.load('chad_jumping_front.png')
         elif self.keys[pygame.K_s] and self.direction.y == 0:
@@ -101,6 +105,7 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
+        self.falling = True
 
     def damage(self, amount):
         if self.i_frame == False:

@@ -16,12 +16,15 @@ class Tile(pygame.sprite.Sprite):
                 self.image = pygame.image.load('ground_dirt.png')
             elif tile_type == 'top':
                 self.image = pygame.image.load('groundtop_dirt.png')
+            elif tile_type == 'bridge':
+                self.image = pygame.image.load('bridge.png')
 
         #non-level dependant tiles
         else:
             if tile_type == '0':
                 self.image = pygame.Surface((size, size))
                 self.image.fill(RED)
+            
             else:
                 self.image = pygame.Surface((size, size))
                 self.image.fill(RED)
