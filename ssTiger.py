@@ -25,6 +25,7 @@ game_folder = path.dirname(__file__)
 sprite_folder = path.join(game_folder, "Sprites")
 score = 0
 font_name = pygame.font.match_font("comicsansms")
+gameDisplay = pygame.display.set_mode((480, 600))
 
 #Classes
 class Player(pygame.sprite.Sprite):
@@ -37,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH/2
         self.rect.bottom = HEIGHT - 10
         self.speed_x = 0
-        self.speed = 8 
+        self.speed = 10
     
     def shoot_bullet(self):
         b = Bullet(self.rect.centerx, self.rect.top)
@@ -51,7 +52,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
 
     def movement(self):
-        #ships movement
+        #Tigers movement
         self.speed_x = 0
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_RIGHT]:
@@ -59,10 +60,16 @@ class Player(pygame.sprite.Sprite):
         if keystate[pygame.K_LEFT]:
             self.speed_x = -self.speed
         self.rect.x += self.speed_x
-    
+        
     def WL(self):
-        if score == 100:
-         self.image = pygame.image.load("TigerW.jpg")
+        if score == 20:
+        #W = pygame.image.load('TigerW.jpg').convert()
+         screen.blit(TigerW, (0, 580))
+         screen.blit(TigerW, background_rect)
+         gameDisplay.blit(background, (999, 999))
+         gameDisplay.blit(wolf_img, (999, 999))
+         gameDisplay.blit(bullet_img, (999, 999))
+         gameDisplay.blit(player_img, (999, 999))
          
          
 
@@ -81,6 +88,7 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.y = random.randrange(-150, -100)
         self.speed_y = random.randrange(2, 8)
         self.speed_x = random.randrange(-3, 3)
+   
 
     def spawn_new_wolf(self):
         self.rect.x = random.randrange(0, WIDTH - self.rect.width)
@@ -137,7 +145,7 @@ background_rect = background.get_rect()
 player_img = get_image("tiger.png")
 bullet_img = get_image("fireball.png")
 wolf_img = get_image("swolf.png")
-wolfL = get_image("wolfL.png")
+wolfL = get_image("wolfL.jpg")
 TigerW = get_image("TigerW.jpg")
 
      
@@ -168,32 +176,55 @@ while running:
            
 
     #Update
-    all_sprites.update()
+    if score <= 20:
+        all_sprites.update()
 
 
-    #if wolf hits tiger 
-    wolf_collision = pygame.sprite.spritecollide(player, all_wolfs, False)
-    if wolf_collision:
-        screen.blit(TigerW, (200, 40))  
-        # running = False
+        #if wolf hits tiger 
+        wolf_collision = pygame.sprite.spritecollide(player, all_wolfs, False)
+        if wolf_collision:
+            player.WL()
+            background = get_image("wolfL.jpg")
+            gameDisplay.blit(background, (999, 999))
+            gameDisplay.blit(wolf_img, (999, 999))
+            gameDisplay.blit(bullet_img, (999, 999))
+            gameDisplay.blit(player_img, (999, 999))
+            
+
+            #L = pygame.image.load("wolfL.png").convert()
+            # L_width = L.get_width()
+            
+            
+
+        #if bullet hits wolf
+        bullet_collision = pygame.sprite.groupcollide(all_wolfs, all_bullets, True, True)
+        for collision in bullet_collision:
+            spawn_new_wolf()
+            score += 10    
         
 
-       #if bullet hits wolf
-    bullet_collision = pygame.sprite.groupcollide(all_wolfs, all_bullets, True, True)
-    for collision in bullet_collision:
-        spawn_new_wolf()
-        score += 10      
 
-
-
-    if score >= 10:
-        player.WL()
-        screen.blit(TigerW, (170, 320))
-        screen.blit(background, background_rect)
-        time.sleep(2)
-        running = False
-        
     
+
+    if score >= 20:
+        player.WL()
+        background = get_image("TigerW.jpg")
+        #background_rect = background.get_rect()
+        #bg = pygame.image.load('TigerW.jpg').convert()
+        screen.blit(TigerW, (0, 580))
+        gameDisplay.blit(background, (999, 999))
+        gameDisplay.blit(wolf_img, (999, 999))
+        gameDisplay.blit(bullet_img, (999, 999))
+        gameDisplay.blit(player_img, (999, 999))
+       
+        #screen.blit(TigerW, background_rect)
+        #time.sleep(2)
+        # running = False
+
+
+   # mouseX = pygame.mouse.get_pos()[0]
+    #mouseY = pygame.mouse.get_pos()[1]   
+    #print(mouseX, mouseY)
     #Draw to the screen:
     screen.blit(background, background_rect) 
     all_sprites.draw(screen)
