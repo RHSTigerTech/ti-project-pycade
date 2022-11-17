@@ -20,6 +20,9 @@ class Coin(pygame.sprite.Sprite):
         elif str(self.value) == '10':
             self.image = pygame.image.load('mega_coin.png')
             self.pos = pos
+        elif str(self.value) == 'plunger':
+            self.image = pygame.image.load('plunger_powerup.png')
+            self.pos = pos
         else:
             self.image = pygame.image.load('omega_coin.png')
 
