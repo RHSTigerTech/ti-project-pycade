@@ -1,5 +1,5 @@
 import pygame, random, math, os
-import Crocketdile.Crocodile2 as Crocodile2
+import Crocodile2
 
 # from pygame import mixer
 
