@@ -28,6 +28,13 @@ SeanGraffiti = pygame.image.load("seanGraffiti.png")
 HalfaCar = pygame.image.load("halfAcar.png")
 GoWeegyGo = pygame.image.load("Wedgysavehim.png")
 Heart = pygame.image.load("heart.png")
+Barba = pygame.image.load("barberCoin.png")
+
+#Barba image size
+default_size = (250, 250)
+Barba = pygame.transform.scale(Barba, default_size)
+default_position = (200, 200)
+
 
 clock = pygame.time.Clock()
 FPS = 60
@@ -56,12 +63,14 @@ LadderX = 1200
 LadderY = -2
 sgX = 123456
 sgY = 10
-CarX = 200
+CarX = 100
 CarY = 80200
-WedgyX = 1800
-WedgyY = 2285
+WedgyX = 1500
+WedgyY = -666
 HeartX = -100
 HeartY = -40
+BarbaX = 10
+BarbaY = 10
 
 
 rect = sprite_sheet_image.get_rect()
@@ -133,7 +142,6 @@ while run:
 
 		clock.tick(FPS)
 
-		# print(Trash1X)
 		
 		#scroll background + speeds scroll
 		scroll -= dif
@@ -182,7 +190,7 @@ while run:
 				COINMOVEY = 520
 		
 		if CarX <= -250:
-			NewCar = random.randint(8, 9)
+			NewCar = random.randint(1, 18)
 			if NewCar == 1:
 				CarX = 5500
 				CarY = 200
@@ -238,13 +246,71 @@ while run:
 				Trash2X = 2000
 				Trash2Y = 195
 			if NewCar == 9:
+				CarX = 2100
+				CarY = -1000
 				Trash1X = 2000
 				Trash1Y = 460
 				Trash2X = 2000
 				Trash2Y = 195
 				WedgyX = 1700
 				WedgyY = 444
+			if NewCar == 10:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 430
+			if NewCar == 11:
+				Trash1X = 1900
+				Trash1Y = 200
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 12:
+				Trash1X = 1900
+				Trash1Y = 340
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 13:
+				Trash1X = 1900
+				Trash1Y = 460
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 14:
+				Trash2X = 1900
+				Trash2Y = 195
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 15:
+				Trash2X = 1900
+				Trash2Y = 328
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 16:
+				Trash2X = 1900
+				Trash2Y = 430
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 17:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+				MeatX = 1800
+				MeatY = 444
+			if NewCar == 18:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 430
 				
+		#Health Cap
+		if health_value > 5:
+			health_value = 5
 
 		
 		#If meat goes off screen
@@ -386,22 +452,123 @@ while run:
 				health_value -= 1
 			elif action == 2:
 				health_value -= 3
-			NewCar = random.randint(1, 3)
+			NewCar = random.randint(1, 18)
 			if NewCar == 1:
-				CarX = 5000
+				CarX = 5500
 				CarY = 200
 				MeatX = 1800
 				MeatY = 310
+				Trash1X = 3000
+				Trash1Y = 460
+				Trash2X = 4444
+				Trash2Y = 328
+				WedgyX = 2800
+				WedgyY = 186
 			if NewCar == 2:
 				CarX = 6000
 				CarY = 330
-				MeatX = 1800
+				MeatX = 5000
 				MeatY = 580
+				WedgyX = 1700
+				WedgyY = 320
 			if NewCar == 3:
 				CarX = 7000
 				CarY = 460
+				MeatX = 3000
+				MeatY = 444
+			if NewCar == 4:
+				CarX = 5500
+				CarY = 200
+				Trash1X = 5500
+				Trash1Y = 460
+			if NewCar == 5:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+			if NewCar == 6:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+				MeatX = 5000
+				MeatY = 444
+			if NewCar == 7:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 328
+			if NewCar == 8:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+			if NewCar == 9:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+				WedgyX = 1700
+				WedgyY = 444
+			if NewCar == 10:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 430
+			if NewCar == 11:
+				Trash1X = 1900
+				Trash1Y = 200
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 12:
+				Trash1X = 1900
+				Trash1Y = 340
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 13:
+				Trash1X = 1900
+				Trash1Y = 460
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 14:
+				Trash2X = 1900
+				Trash2Y = 195
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 15:
+				Trash2X = 1900
+				Trash2Y = 328
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 16:
+				Trash2X = 1900
+				Trash2Y = 430
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 17:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
 				MeatX = 1800
 				MeatY = 444
+			if NewCar == 18:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 430
 		if CarX <= 300 and y == 300 and CarY == 330:
 			dif = 4
 			score_value -= 15
@@ -409,22 +576,123 @@ while run:
 				health_value -= 1
 			elif action == 2:
 				health_value -= 3
-			NewCar = random.randint(1, 3)
+			NewCar = random.randint(1, 18)
 			if NewCar == 1:
-				CarX = 5000
+				CarX = 5500
 				CarY = 200
 				MeatX = 1800
 				MeatY = 310
+				Trash1X = 3000
+				Trash1Y = 460
+				Trash2X = 4444
+				Trash2Y = 328
+				WedgyX = 2800
+				WedgyY = 186
 			if NewCar == 2:
 				CarX = 6000
 				CarY = 330
-				MeatX = 1800
+				MeatX = 5000
 				MeatY = 580
+				WedgyX = 1700
+				WedgyY = 320
 			if NewCar == 3:
 				CarX = 7000
 				CarY = 460
+				MeatX = 3000
+				MeatY = 444
+			if NewCar == 4:
+				CarX = 5500
+				CarY = 200
+				Trash1X = 5500
+				Trash1Y = 460
+			if NewCar == 5:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+			if NewCar == 6:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+				MeatX = 5000
+				MeatY = 444
+			if NewCar == 7:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 328
+			if NewCar == 8:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+			if NewCar == 9:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+				WedgyX = 1700
+				WedgyY = 444
+			if NewCar == 10:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 430
+			if NewCar == 11:
+				Trash1X = 1900
+				Trash1Y = 200
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 12:
+				Trash1X = 1900
+				Trash1Y = 340
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 13:
+				Trash1X = 1900
+				Trash1Y = 460
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 14:
+				Trash2X = 1900
+				Trash2Y = 195
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 15:
+				Trash2X = 1900
+				Trash2Y = 328
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 16:
+				Trash2X = 1900
+				Trash2Y = 430
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 17:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
 				MeatX = 1800
 				MeatY = 444
+			if NewCar == 18:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 430
 		if CarX <= 300 and y == 430 and CarY == 460:
 			dif = 4
 			score_value -= 15
@@ -432,22 +700,159 @@ while run:
 				health_value -= 1
 			elif action == 2:
 				health_value -= 3
-			NewCar = random.randint(1, 3)
+			NewCar = random.randint(1, 18)
 			if NewCar == 1:
-				CarX = 5000
+				CarX = 5500
 				CarY = 200
 				MeatX = 1800
 				MeatY = 310
+				Trash1X = 3000
+				Trash1Y = 460
+				Trash2X = 4444
+				Trash2Y = 328
+				WedgyX = 2800
+				WedgyY = 186
 			if NewCar == 2:
 				CarX = 6000
 				CarY = 330
-				MeatX = 1800
+				MeatX = 5000
 				MeatY = 580
+				WedgyX = 1700
+				WedgyY = 320
 			if NewCar == 3:
 				CarX = 7000
 				CarY = 460
+				MeatX = 3000
+				MeatY = 444
+			if NewCar == 4:
+				CarX = 5500
+				CarY = 200
+				Trash1X = 5500
+				Trash1Y = 460
+			if NewCar == 5:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+			if NewCar == 6:
+				CarX = 7000
+				CarY = 460
+				Trash2X = 5500
+				Trash2Y = 328
+				MeatX = 5000
+				MeatY = 444
+			if NewCar == 7:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 328
+			if NewCar == 8:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+			if NewCar == 9:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
+				WedgyX = 1700
+				WedgyY = 444
+			if NewCar == 10:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 200
+				Trash2X = 2000
+				Trash2Y = 430
+			if NewCar == 11:
+				Trash1X = 1900
+				Trash1Y = 200
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 12:
+				Trash1X = 1900
+				Trash1Y = 340
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 13:
+				Trash1X = 1900
+				Trash1Y = 460
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 14:
+				Trash2X = 1900
+				Trash2Y = 195
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 15:
+				Trash2X = 1900
+				Trash2Y = 328
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 16:
+				Trash2X = 1900
+				Trash2Y = 430
+				CarX = 2000
+				CarY = 2000
+			if NewCar == 17:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 460
+				Trash2X = 2000
+				Trash2Y = 195
 				MeatX = 1800
 				MeatY = 444
+			if NewCar == 18:
+				CarX = 2100
+				CarY = -1000
+				Trash1X = 2000
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 430
+
+		#Devin sprite touched
+		if WedgyX <= 400 and y == 170 and WedgyY == 186 and action == 2:
+			WedgyY = -1000
+			dif += 5
+			score_value += 10
+			health_value += 1
+		if WedgyX <= 400 and y == 300 and WedgyY == 320 and action == 2:
+			WedgyY = -1000
+			dif += 5
+			score_value += 10
+			health_value += 1
+		if WedgyX <= 400 and y == 430 and WedgyY == 444 and action == 2:
+			WedgyY = -1000
+			dif += 5
+			score_value += 10
+			health_value += 1
+
+
+		if WedgyX <= 400 and y == 170 and WedgyY == 186 and action == 1:
+			WedgyY = -1000
+			dif = 4
+			score_value -= 10
+			health_value -= 1
+		if WedgyX <= 400 and y == 300 and WedgyY == 320 and action == 1:
+			WedgyY = -1000
+			dif = 4
+			score_value -= 10
+			health_value += -1
+		if WedgyX <= 400 and y == 430 and WedgyY == 444 and action == 1:
+			WedgyY = -1000
+			dif = 4
+			score_value -= 10
+			health_value -= 1
+
+
 
 		#If touching Trash1 (The pile of cement stuff)
 		if Trash1X <= 400 and y == 170 and Trash1Y == 200:
@@ -487,7 +892,7 @@ while run:
 				health_value -= 1
 			elif action == 2:
 				health_value -= 3
-		if Trash2X <= 400 and y == 430 and Trash2Y == 450:
+		if Trash2X <= 400 and y == 430 and Trash2Y == 430:
 			Trash2Y = -250
 			dif = 4
 			if action == 1:
@@ -520,10 +925,12 @@ while run:
 		screen.blit(Trash1, (Trash1X, Trash1Y))
 		screen.blit(GoWeegyGo, (WedgyX, WedgyY))
 		screen.blit(HalfaCar, (CarX, CarY))
+		screen.blit(Barba, (BarbaX, BarbaY))
 		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(Meat, (MeatX, MeatY))
 		screen.blit(animation_list[action][frame], (x, y))
 		screen.blit(Heart, (HeartX, HeartY))
+
 
 		if health_value <= 0:
 			dif = 0
@@ -532,8 +939,22 @@ while run:
 			bg_width = bg.get_width()
 
 
-			COINMOVEX = 10000
-			COINMOVEY = 250
+			COINMOVEY = 10000
+			Trash1Y = 10000
+			Trash2Y = 10000
+			MeatY = 10000
+			TunnelY = 10000
+			Pipe1Y = 10000
+			Pipe2Y = 10000
+			LadderY = 10000
+			sgY = 10000
+			CarY = 10000
+			WedgyY = 10000
+			HeartY = 10000
+			textY = 10000
+			textYY = 10000
+
+
 
 
 		#event handler and Crockettdile Movement
