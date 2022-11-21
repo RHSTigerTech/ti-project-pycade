@@ -27,7 +27,6 @@ while 1: # keeps gameloop running until game over
     #Sets Screen Background
     SCREEN.fill(BLUE)
     level.run() #level creation / level running
-    
     #quit the game
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()

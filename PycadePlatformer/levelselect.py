@@ -1,25 +1,15 @@
-# levelMap = ['                                                                      ',
-#             '                                                                      ',
-#             '                                                                      ',
-#             '                                                                      ',
-#             '   xx         xx                                                      ',
-#             '          P xx    wC                                                  ',
-#             '       x  xxXX    xx  xx                                              ',
-#             '    x  X  XXXX    XX  XXx             C  M  O                         ',
-#             '    xxxX  XXXXxx  XX  XXXx  S   x                                     ',
-#             'xxxxXXXX00XXXXXX00XX00XXXXxxxxxxXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']
-levelMap = ['                                        ',
-            '                                        ',
-            '                                        ',
-            '                                        ',
-            '                                        ',
-            '                           xxbbbbbbbbbxx',
-            '   DDD                  wxxXX         XX',
-            '         S  S          xxXXXX         XX',
-            'P   p   xxxxxx        xxXXXXX         XX',
-            'xxxxxxxxXXXXXXxxxxxxxXXXXXXXX         XX',
-            'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XX',
-            'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XX']
+levelMap = ['                                            ',
+            '                                            ',
+            '                                            ',
+            '                                        xxxx',
+            '                                        XXXX',
+            '                           xxbbbbbbbbbxxXXXX',
+            '   DDD                  wxxXX         XXXXXX',
+            '         S  S          xxXXXX         XXXXXX',
+            'P   p   xxxxxx        xxXXXXX         XXXXXX',
+            'xxxxxxxxXXXXXXxxxxxxxXXXXXXXX         XXXXXX',
+            'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XXXXXX',
+            'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XXXXXX']
             
 
 #legend

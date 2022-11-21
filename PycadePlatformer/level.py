@@ -15,6 +15,9 @@ class Level:
         self.displaysurface = surface
         self.leveldata = leveldata
         self.world_shift = -8
+        
+        #placeholders
+        self.plunger = 0
         self.player_sprite = 0
 
     #draw the upper screen menu
@@ -26,8 +29,10 @@ class Level:
             ((36 ,4), '0', 32, 'coin_val100'),
             ((68,4), '0', 32, 'coin_val10'),
             ((100,4), '0', 32, 'coin_val1'),
+            ((136, 4), '0', 32, 'charge_0')
         ]
         #add all values to group
+
         for digit in user_menu:
             menu_piece = Ingame_Menu(digit[0], digit[1], digit[2], digit[3])
             self.menu.add(menu_piece)
@@ -153,6 +158,17 @@ class Level:
         for mob in self.mobs.sprites():
             if player.rect.colliderect(mob):
                 player.damage(1)
+        
+        #player vs Plunger
+        for bullet in self.bullets.sprites():
+            if player.rect.colliderect(bullet.rect) and bullet.cooldown < 0:
+                if bullet.type == 'plunger':
+                    if player.direction.x < 0:
+                        player.rect.left = bullet.rect.right
+                        player.direction.x = 0     
+                    elif player.direction.x > 0:
+                        player.rect.right = bullet.rect.left
+                        player.direction.x = 0
     #check for vertical collisions                
     def vertical_movement_collisions(self):
         player = self.player_sprite
@@ -193,17 +209,30 @@ class Level:
                     player.damage(1)
                 elif player.direction.y > 0.8:
                     mob.remove(self.mobs)
+
+        #player vs plunger
+        for bullet in self.bullets.sprites():
+            if player.rect.colliderect(bullet.rect) and bullet.cooldown < 0:
+                if bullet.type == 'plunger':
+                    if player.direction.y < 0:
+                        player.rect.top = bullet.rect.bottom
+                        player.direction.y = 0
+                    elif player.direction.y > 0:
+                        player.rect.bottom = bullet.rect.top
+                        player.direction.y = 0
+                        player.falling = False
     #check for collecting items
     def item_collisions(self):
         player = self.player_sprite
         #move bullets
         for bullet in self.bullets.sprites():
-            bullet.rect.x += bullet.direction * bullet.speed        
+            
+            bullet.rect.x += bullet.direction.x * bullet.speed        
         #coin / powerups
         for sprite in self.items.sprites():
             if sprite.rect.colliderect(player.rect):
                 if sprite.value == 'plunger':
-                    pass
+                    player.powerup(sprite.value)
                 else:
                     self.player_sprite.coin_count += sprite.value
                 self.items.remove(sprite)
@@ -211,23 +240,62 @@ class Level:
         for bullet in self.bullets.sprites():
             for tile in self.tiles.sprites():
                 if bullet.rect.colliderect(tile.rect):
-                    self.bullets.remove(bullet)
-                    print('remove bullet')
+                    if bullet.type != 'plunger':
+                        self.bullets.remove(bullet)
+                        print('remove bullet')
+                    else:
+
+                        if bullet.direction.x < 0:
+                            bullet.rect.left = tile.rect.right
+                            bullet.direction.x = 0
+                        elif bullet.direction.x > 0:
+                            bullet.rect.right = tile.rect.left
+                            bullet.direction.x = 0
         #bullet hitting player
         for bullet in self.bullets.sprites():
             if bullet.rect.colliderect(player.rect):
-                player.damage(1)
-                self.bullets.remove(bullet)
+                if bullet.type != 'plunger':
+                    player.damage(1)
+                    self.bullets.remove(bullet)
+                    
+        #bullet hitting mob
+        for mob in self.mobs.sprites():
+            for bullet in self.bullets.sprites():
+                if bullet.rect.colliderect(mob.rect):
+                    if bullet.type == 'plunger':
+                        self.mobs.remove(mob)
+        
+        #bullet hitting coins
+        for bullet in self.bullets.sprites():
+            for coin in self.items.sprites():
+                if bullet.rect.colliderect(coin.rect):
+                    if coin.value == 'plunger':
+                        player.powerup(coin.value)
+                    else:
+                        player.coin_count += sprite.value
+                    self.items.remove(coin)
+
     #check for an enemy attack
     def attacks(self):
-
+        player = self.player_sprite
         #add bullets to screen
         for mob in self.mobs.sprites():
             if mob.attack() == True:
                 if mob.type == 'weegy':
                     projectile = Projectile((mob.rect.x, mob.rect.y + 25), 'peely', mob.direction.x, 5)
                     self.bullets.add(projectile)
-                    print('add bullet')
+        
+        if player.plunger == True:
+            player.plunger = False
+            for plunger in self.bullets.sprites():
+                self.bullets.remove(plunger)
+            self.plunger = Projectile((player.rect.x,player.rect.y), 'plunger', player.direction.x, 50)
+            if self.plunger.type == 'plunger':
+                if player.image_name == 'chad_front':
+                    self.plunger.direction.x = 1
+                elif player.image_name == 'chad_back':
+                    self.plunger.direction.x = -1
+            self.bullets.add(self.plunger)
 
     #run the game    
     def run(self):
