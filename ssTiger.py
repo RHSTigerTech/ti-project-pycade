@@ -1,8 +1,9 @@
-import pygame
+import pygame, os
 import time
 import random
 from os import path
 
+os.chdir('tiger_images')
 
 #Colors:
 WHITE = (255, 255, 255)
@@ -22,7 +23,7 @@ pygame.display.set_caption("Tiger Shooter!")
 clock = pygame.time.Clock()
 FPS = 60
 game_folder = path.dirname(__file__)
-sprite_folder = path.join(game_folder, "Sprites")
+sprite_folder = path.join(game_folder, "tiger_images")
 score = 0
 font_name = pygame.font.match_font("comicsansms")
 gameDisplay = pygame.display.set_mode((480, 600))
