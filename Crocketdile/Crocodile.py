@@ -26,9 +26,14 @@ SewerPipe2 = pygame.image.load("sewerPipe2.png")
 SewerLadder = pygame.image.load("sewerLadder.png")
 SeanGraffiti = pygame.image.load("seanGraffiti.png")
 HalfaCar = pygame.image.load("halfAcar.png")
+FrontBarrels = pygame.image.load("frontBarrel.png")
 GoWeegyGo = pygame.image.load("Wedgysavehim.png")
 Heart = pygame.image.load("heart.png")
 Barba = pygame.image.load("barberCoin.png")
+GameOverScreeny = pygame.image.load("gameOver_screen.jpg")
+DontEatHim = pygame.image.load("DontEatGoWeegy.png")
+EndofBackStuff = pygame.image.load("EndofBackStuff.png")
+RottenMeat = pygame.image.load("RottenMeat.png")
 
 #Barba image size
 default_size = (250, 250)
@@ -54,13 +59,13 @@ Trash2X = 1000
 Trash2Y = -305
 CoinSpot = random.randint(1, 3)
 TunnelX = 3800
-TunnelY = 10
+TunnelY = -9999
 Pipe1X = 10
-Pipe1Y = -2
+Pipe1Y = -9999
 Pipe2X = 10000
-Pipe2Y = 10
+Pipe2Y = -9999
 LadderX = 1200
-LadderY = -2
+LadderY = -9999
 sgX = 123456
 sgY = 10
 CarX = 100
@@ -69,8 +74,19 @@ WedgyX = 1500
 WedgyY = -666
 HeartX = -100
 HeartY = -40
-BarbaX = 10
-BarbaY = 10
+BarbaX = -1000
+BarbaY = -1000
+GameOverX = -999990
+GameOverY = -999990
+BarrelX = 10
+BarrelY = 120
+DontEatX = 9000
+DontEatY = -666
+EndX = -499
+EndY = 10
+RottenMeatX = 10
+RottenMeatY = -200
+GameOverRetry = False
 
 
 rect = sprite_sheet_image.get_rect()
@@ -141,7 +157,6 @@ while run:
 		# pygame.time.delay(20)
 
 		clock.tick(FPS)
-
 		
 		#scroll background + speeds scroll
 		scroll -= dif
@@ -154,7 +169,7 @@ while run:
 		if abs(scroll) > bg_width:
 			scroll = 0
 
-		#Makes the Coin Move
+		#Makes the Coins, Background so then it respawns and moves the the background again so its not plain and boring and Obstacles Move
 		COINMOVEX -= dif
 		MeatX -= dif
 		TunnelX -= dif
@@ -166,6 +181,10 @@ while run:
 		Trash1X -= dif
 		Trash2X -= dif
 		WedgyX -= dif
+		DontEatX -= dif
+		EndX -= dif
+		RottenMeatX -= dif
+		#FrontBarrels -= dif
 
 
 		#update animation
@@ -190,7 +209,7 @@ while run:
 				COINMOVEY = 520
 		
 		if CarX <= -250:
-			NewCar = random.randint(1, 18)
+			NewCar = random.randint(1, 52)
 			if NewCar == 1:
 				CarX = 5500
 				CarY = 200
@@ -210,7 +229,7 @@ while run:
 				WedgyX = 1700
 				WedgyY = 320
 			if NewCar == 3:
-				CarX = 7000
+				CarX = 5000
 				CarY = 460
 				MeatX = 3000
 				MeatY = 444
@@ -307,13 +326,267 @@ while run:
 				Trash1Y = 340
 				Trash2X = 1900
 				Trash2Y = 430
+			if NewCar == 19:
+				CarX = 5500
+				CarY = 200
+				MeatX = 1800
+				MeatY = 310
+				Trash1X = 3000
+				Trash1Y = 460
+				Trash2X = 4444
+				Trash2Y = 328
+			if NewCar == 20:
+				CarX = 6000
+				CarY = 330
+				MeatX = 5000
+				MeatY = 580
+			if NewCar == 21:
+				CarX = 5500
+				CarY = 200
+				RottenMeatX = 1800
+				RottenMeatY = 310
+				Trash1X = 3000
+				Trash1Y = 460
+				Trash2X = 4444
+				Trash2Y = 328
+			if NewCar == 22:
+				CarX = 6000
+				CarY = 330
+				RottenMeatX = 5000
+				RottenMeatY = 580
+			if NewCar == 23:
+				CarX = 2300
+				CarY = -500
+				Trash1X = 1900
+				Trash1Y = 200
+				MeatX = 2100
+				MeatY = 444
+				RottenMeatX = 2300
+				RottenMeatY = 580
+			if NewCar == 24:
+				CarX = 2200
+				CarY = -500
+				Trash1X = 1900
+				Trash1Y = 200
+				MeatX = 2300
+				MeatY = 580
+				RottenMeatX = 2100
+				RottenMeatY = 444
+			if NewCar == 25:
+				CarX = 2100
+				CarY = -500
+				RottenMeatX = 1900
+				RottenMeatY = 310
+				MeatX = 1900
+				MeatY = 580
+			if NewCar == 26:
+				CarX = 2100
+				CarY = 330
+				RottenMeatX = 1900
+				RottenMeatY = 310
+				MeatX = 1900
+				MeatY = 580
+			if NewCar == 27:
+				CarX = 2100
+				CarY = 460
+				RottenMeatX = 1900
+				RottenMeatY = 310
+				MeatX = 1900
+				MeatY = 580
+			if NewCar == 28:
+				CarX = 2100
+				CarY = -500
+				RottenMeatX = 1900
+				RottenMeatY = 580
+				MeatX = 1900
+				MeatY = 310
+			if NewCar == 29:
+				CarX = 2100
+				CarY = 330
+				RottenMeatX = 1900
+				RottenMeatY = 580
+				MeatX = 1900
+				MeatY = 310
+			if NewCar == 30:
+				CarX = 2100
+				CarY = 460
+				RottenMeatX = 1900
+				RottenMeatY = 580
+				MeatX = 1900
+				MeatY = 310
+			if NewCar == 31:
+				CarX = 2100
+				CarY = -500
+				RottenMeatX = 1900
+				RottenMeatY = 580
+			if NewCar == 32:
+				CarX = 2100
+				CarY = 330
+				RottenMeatX = 1900
+				RottenMeatY = 580
+			if NewCar == 33:
+				CarX = 2100
+				CarY = 460
+				RottenMeatX = 1900
+				RottenMeatY = 580
+			if NewCar == 34:
+				CarX = 2100
+				CarY = -500
+				RottenMeatX = 1900
+				RottenMeatY = 310
+			if NewCar == 35:
+				CarX = 2100
+				CarY = -500
+				RottenMeatX = 1900
+				RottenMeatY = 444
+			if NewCar == 36:
+				CarX = 2100
+				CarY = -500
+				Trash1X = 1900
+				Trash1Y = 200
+				RottenMeatX = 1900
+				RottenMeatY = 444
+				Trash2X = 1900
+				Trash2Y = 430
+			if NewCar == 37:
+				CarX = 2300
+				CarY = -1000
+				Trash1X = 2100
+				Trash1Y = 460
+				Trash2X = 2100
+				Trash2Y = 195
+				MeatX = 1800
+				MeatY = 444
+				RottenMeatX = 2300
+				RottenMeatY = 444
+			if NewCar == 38:
+				CarX = 4500
+				CarY = 330
+				Trash1X = 2700
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 430
+			if NewCar == 39:
+				CarX = 4500
+				CarY = 330
+				Trash1X = 2700
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 430
+				RottenMeatX = 3653
+				RottenMeatY = 310
+			if NewCar == 40:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2700
+				Trash1Y = 460
+				Trash2X = 1900
+				Trash2Y = 328
+			if NewCar == 41:
+				CarX = 3000
+				CarY = 460
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 2700
+				Trash2Y = 195
+			if NewCar == 42:
+				CarX = 3000
+				CarY = 330
+				Trash1X = 2700
+				Trash1Y = 460
+				Trash2X = 1900
+				Trash2Y = 328
+				RottenMeatX = 2700
+				RottenMeatY = 310
+			if NewCar == 43:
+				CarX = 5000
+				CarY = 460
+				RottenMeatX = 1900
+				RottenMeatY = 310
+				WedgyX = 2522
+				WedgyY = 320
+				Trash1X = 3309
+				Trash1Y = 200
+				Trash2X = 4044
+				Trash2Y = 328
+			if NewCar == 44:
+				CarX = 5000
+				CarY = 460
+				RottenMeatX = 1900
+				RottenMeatY = 310
+				Trash1X = 3309
+				Trash1Y = 200
+				Trash2X = 4044
+				Trash2Y = 328
+			if NewCar == 45:
+				CarX = 3500
+				CarY = 460
+				RottenMeatX = 1900
+				RottenMeatY = 310
+				Trash1X = 2209
+				Trash1Y = 460
+				Trash2X = 3044
+				Trash2Y = 328
+			if NewCar == 46:
+				CarX = 2800
+				CarY = 200
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 2800
+				Trash2Y = 430
+			if NewCar == 47:
+				CarX = 2800
+				CarY = 200
+				Trash2X = 1900
+				Trash2Y = 430
+			if NewCar == 48:
+				CarX = 2800
+				CarY = 200
+				Trash1X = 2800
+				Trash1Y = 460
+				Trash2X = 1900
+				Trash2Y = 328
+			if NewCar == 49:
+				CarX = 1900
+				CarY = 200
+				Trash2X = 1900
+				Trash2Y = 328
+				RottenMeatX = 1900
+				RottenMeatY = 580
+			if NewCar == 50:
+				CarX = 1900
+				CarY = 460
+				Trash2X = 1900
+				Trash2Y = 328
+				RottenMeatX = 1900
+				RottenMeatY = 310
+			if NewCar == 51:
+				CarX = 1900
+				CarY = -460
+				Trash1X = 1900
+				Trash1Y = 200
+				Trash2X = 1900
+				Trash2Y = 328
+				RottenMeatX = 1900
+				RottenMeatY = 580
+			if NewCar == 52:
+				CarX = 1900
+				CarY = -460
+				Trash1X = 1900
+				Trash1Y = 460
+				Trash2X = 1900
+				Trash2Y = 328
+				RottenMeatX = 1900
+				RottenMeatY = 310
+
+
 				
 		#Health Cap
 		if health_value > 5:
 			health_value = 5
 
 		
-		#If meat goes off screen
+		#If Obstacles or other so then it respawns and moves the the background again so its not plain and boring goes off screen
 		if MeatX <= -150:
 			MeatY = -100
 
@@ -323,70 +596,97 @@ while run:
 		if Trash2X <= -240:
 			Trash2Y = -900
 
+		if WedgyX <= -200:
+			WedgyY = -666
 
-		#Choosing a New Tunnel
-		if TunnelX <= -500:
-			BackgroundStuff = random.randint(1, 5)
-			if BackgroundStuff == 1:
-				TunnelX = 10000
-			if BackgroundStuff == 2:
-				TunnelX = 3000
-			if BackgroundStuff == 3:
-				TunnelX = 8000
-			if BackgroundStuff == 4:
-				TunnelX = 20000
-			if BackgroundStuff == 5:
-				TunnelX = 69420
+		if RottenMeatX <= -150:
+			RottenMeatY = -100
 
-		if Pipe1X <= -1000:
-			BackgroundStuff = random.randint(1, 5)
-			if BackgroundStuff == 1:
-				Pipe1X = 1800
-			if BackgroundStuff == 2:
-				Pipe1X = 5050
-			if BackgroundStuff == 3:
-				Pipe1X = 9100
-			if BackgroundStuff == 4:
-				Pipe1X = 20000
-			if BackgroundStuff == 5:
-				Pipe1X = 42069
+		#Background Respawn so then it respawns and moves the the background again so its not plain and boring
+		if EndX <= -500:
+			NewBack = random.randint(1, 14)
+			if NewBack == 1:
+				LadderX = 1800
+				LadderY = -2
+				EndX = 1900
+			if NewBack == 2:
+				sgX = 1800
+				sgY = 10
+				EndX = 1900
+			if NewBack == 3:
+				Pipe1X = 2000
+				Pipe1Y = -2
+				Pipe2X = 3000
+				Pipe2Y = 10
+				EndX = 3500
+			if NewBack == 4:
+				TunnelX = 1900
+				TunnelY = 10
+				EndX = 2500
+			if NewBack == 5:
+				DontEatX = 1800
+				DontEatY = 30
+				EndX = 2000
+			if NewBack == 6:
+				LadderX = 2100
+				LadderY = -2
+				Pipe1X = 2100
+				Pipe1Y = -2
+				EndX = 2500
+			if NewBack == 7:
+				LadderX = 3200
+				LadderY = -2
+				Pipe1X = 2100
+				Pipe1Y = -2
+				EndX = 3500
+			if NewBack == 8:
+				Pipe2X = 2000
+				Pipe2Y = 10
+				TunnelX = 2700
+				TunnelY = 10
+				Pipe1X = 3200
+				Pipe1Y = -2
+				EndX = 3700
+			if NewBack == 9:
+				Pipe2X = 2000
+				Pipe2Y = 10
+				TunnelX = 3700
+				TunnelY = 10
+				Pipe1X = 4500
+				Pipe1Y = -2
+				EndX = 5000
+			if NewBack == 10:
+				Pipe1X = 2000
+				Pipe1Y = -2
+				EndX = 2700
+			if NewBack == 11:
+				Pipe2X = 2000
+				Pipe2Y = 10
+				EndX = 2500
+			if NewBack == 12:
+				Pipe2X = 2000
+				Pipe2Y = 10
+				LadderX = 2800
+				LadderY = -2
+				EndX = 3000
+			if NewBack == 13:
+				Pipe2X = 2200
+				Pipe2Y = 10
+				LadderX = 2000
+				LadderY = -2
+				EndX = 3000
+			if NewBack == 14:
+				Pipe2X = 2200
+				Pipe2Y = 10
+				LadderX = 4500
+				LadderY = -2
+				Pipe1X = 6000
+				Pipe1Y = -2
+				EndX = 6600
 
-		if Pipe2X <= -1000:
-			Pipe2Stuff = random.randint(1, 5)
-			if Pipe2Stuff == 1:
-				Pipe2X = 2100
-			if Pipe2Stuff == 2:
-				Pipe2X = 5950
-			if Pipe2Stuff == 3:
-				Pipe2X = 7300
-			if Pipe2Stuff == 4:
-				Pipe2X = 10000
-			if Pipe2Stuff == 5:
-				Pipe2X = 3500
 
-		if LadderX <= -950:
-			LadderRandom = random.randint(1, 6)
-			if LadderRandom == 1:
-				LadderX = 2522
-			if LadderRandom == 2:
-				LadderX = 5050
-			if LadderRandom == 3:
-				LadderX = 3500
-			if LadderRandom == 4:
-				LadderX = 9000
-			if LadderRandom == 5:
-				LadderX = 2069
-			if LadderRandom == 6:
-				LadderX = 10000
-		
-		if sgX <= -1000:
-			EasterEgg = random.randint(1, 3)
-			if EasterEgg == 1:
-				sgX = 123456
-			if EasterEgg == 2:
-				sgX = 654321
-			if EasterEgg == 3:
-				sgX = 696969
+
+
 
 		#If Crockettdile and Coin are in the same lane then randomly choose another lane to spawn in
 		if COINMOVEX <= 400 and y == 170 and COINMOVEY == 250:
@@ -427,7 +727,7 @@ while run:
 				COINMOVEX = 1800
 				COINMOVEY = 520
 		
-		#If Meat Touches
+		#If Meat is Eaten
 		if MeatX <= 400 and y == 170 and MeatY == 310 and action == 2:
 			MeatY = -100
 			dif += 5
@@ -443,6 +743,23 @@ while run:
 			dif += 5
 			score_value += 10
 			health_value += 1
+
+		#If Rotten Meat is Eaten
+		if RottenMeatX <= 400 and y == 170 and RottenMeatY == 310 and action == 2:
+			RottenMeatY = -100
+			dif = 4
+			score_value -= 10
+			health_value -= 2
+		if RottenMeatX <= 400 and y == 430 and RottenMeatY == 580 and action == 2:
+			RottenMeatY = -100
+			dif = 4
+			score_value -= 10
+			health_value -= 2
+		if RottenMeatX <= 400 and y == 300 and RottenMeatY == 444 and action == 2:
+			RottenMeatY = -100
+			dif = 4
+			score_value -= 10
+			health_value -= 2
 
 		#If Car is Touched
 		if CarX <= 300 and y == 170 and CarY == 200:
@@ -854,7 +1171,7 @@ while run:
 
 
 
-		#If touching Trash1 (The pile of cement stuff)
+		#If touching Trash1 (The pile of cement so then it respawns and moves the the background again so its not plain and boring)
 		if Trash1X <= 400 and y == 170 and Trash1Y == 200:
 			Trash1Y = -250
 			dif = 4
@@ -916,27 +1233,34 @@ while run:
 		#show frame image
 		for i in range(0, tiles):
 			screen.blit(bg, (i * bg_width + scroll, 0))
+		screen.blit(EndofBackStuff, (EndX, EndY))
+		screen.blit(DontEatHim, (DontEatX, DontEatY))
 		screen.blit(SeanGraffiti, (sgX, sgY))
 		screen.blit(SewerTunnel, (TunnelX, TunnelY))
 		screen.blit(SewerLadder, (LadderX, LadderY))
 		screen.blit(SewerPipe2, (Pipe2X, Pipe2Y))
 		screen.blit(SewerPipe, (Pipe1X, Pipe1Y))
+		screen.blit(FrontBarrels, (BarrelX, BarrelY))
+		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(Trash2, (Trash2X, Trash2Y))
 		screen.blit(Trash1, (Trash1X, Trash1Y))
+		screen.blit(RottenMeat, (RottenMeatX, RottenMeatY))
 		screen.blit(GoWeegyGo, (WedgyX, WedgyY))
 		screen.blit(HalfaCar, (CarX, CarY))
 		screen.blit(Barba, (BarbaX, BarbaY))
-		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(Meat, (MeatX, MeatY))
 		screen.blit(animation_list[action][frame], (x, y))
 		screen.blit(Heart, (HeartX, HeartY))
+		screen.blit(GameOverScreeny, (GameOverX, GameOverY))
 
 
 		if health_value <= 0:
 			dif = 0
 			scroll = 0
-			bg = pygame.image.load('gameOver_screen.jpg').convert()
+			bg = pygame.image.load('Black.jpg').convert()
 			bg_width = bg.get_width()
+			GameOverX = 0
+			GameOverY = 0
 
 
 			COINMOVEY = 10000
@@ -953,8 +1277,7 @@ while run:
 			HeartY = 10000
 			textY = 10000
 			textYY = 10000
-
-
+			GameOverRetry = True
 
 
 		#event handler and Crockettdile Movement
@@ -980,6 +1303,26 @@ while run:
 						cooldown = True
 				else:
 					cooldown = False
+
+			if keys[pygame.K_RETURN] and GameOverRetry == True:
+				health_value = 3
+				score_value = 0
+				bg = pygame.image.load('sewer_background.jpg').convert()
+				GameOverRetry = False
+				dif = 4
+				GameOverX = -999990
+				GameOverY = -999990
+				CarX = -499
+				CarY = -500
+				EndX = -499
+				EndY = 10
+				textX = 10
+				textXX = 110
+				textY = 10
+				textYY = 80
+				HeartX = -100
+				HeartY = -40
+		
 			
 			if event.type == pygame.QUIT:
 				run = False
