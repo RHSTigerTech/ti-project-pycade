@@ -12,7 +12,7 @@ SCREEN_WIDTH = 1800
 SCREEN_HEIGHT = 756
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('The Crockettdile')
+pygame.display.set_caption('Crockettdile')
 
 sprite_sheet_image = pygame.image.load('CrocodileSpritesheetMini.png').convert_alpha()
 sprite_sheet = Crocodile2.SpriteSheet(sprite_sheet_image)
@@ -209,7 +209,7 @@ while run:
 				COINMOVEY = 520
 		
 		if CarX <= -250:
-			NewCar = random.randint(1, 52)
+			NewCar = random.randint(1, 53)
 			if NewCar == 1:
 				CarX = 5500
 				CarY = 200
@@ -578,12 +578,19 @@ while run:
 				Trash2Y = 328
 				RottenMeatX = 1900
 				RottenMeatY = 310
+			if NewCar == 53:
+				CarX = 5500
+				CarY = 330
+				Trash1X = 3533
+				Trash1Y = 340
+				Trash2X = 1900
+				Trash2Y = 328
 
 
 				
 		#Health Cap
-		if health_value > 5:
-			health_value = 5
+		if health_value > 3:
+			health_value = 3
 
 		
 		#If Obstacles or other so then it respawns and moves the the background again so its not plain and boring goes off screen
@@ -768,7 +775,7 @@ while run:
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 			NewCar = random.randint(1, 18)
 			if NewCar == 1:
 				CarX = 5500
@@ -892,7 +899,7 @@ while run:
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 			NewCar = random.randint(1, 18)
 			if NewCar == 1:
 				CarX = 5500
@@ -1016,7 +1023,7 @@ while run:
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 			NewCar = random.randint(1, 18)
 			if NewCar == 1:
 				CarX = 5500
@@ -1178,21 +1185,21 @@ while run:
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 		if Trash1X <= 400 and y == 300 and Trash1Y == 340:
 			Trash1Y = -250
 			dif = 4
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 		if Trash1X <= 400 and y == 430 and Trash1Y == 460:
 			Trash1Y = -250
 			dif = 4
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 
 		#If touching Trash2 (The alcohol pile)
 		if Trash2X <= 400 and y == 170 and Trash2Y == 195:
@@ -1201,21 +1208,21 @@ while run:
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 		if Trash2X <= 400 and y == 300 and Trash2Y == 328:
 			Trash2Y = -250
 			dif = 4
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 		if Trash2X <= 400 and y == 430 and Trash2Y == 430:
 			Trash2Y = -250
 			dif = 4
 			if action == 1:
 				health_value -= 1
 			elif action == 2:
-				health_value -= 3
+				health_value -= 2
 
 
 		#If Crockettdile is trying to go past the top or bottom lane then stay in the same lane as it is
@@ -1283,6 +1290,26 @@ while run:
 		#event handler and Crockettdile Movement
 		for event in pygame.event.get():
 			keys = pygame.key.get_pressed()
+
+			if keys[pygame.K_RETURN] and GameOverRetry == True:
+				health_value = 3
+				score_value = 0
+				bg = pygame.image.load('sewer_background.jpg').convert()
+				GameOverRetry = False
+				dif = 4
+				GameOverX = -999990
+				GameOverY = -999990
+				CarX = -499
+				CarY = -500
+				EndX = -499
+				EndY = 10
+				textX = 10
+				textXX = 110
+				textY = 10
+				textYY = 80
+				HeartX = -100
+				HeartY = -40
+	
 			if keys[pygame.K_w]:
 				y -= 65
 			if keys[pygame.K_s]:
@@ -1303,25 +1330,6 @@ while run:
 						cooldown = True
 				else:
 					cooldown = False
-
-			if keys[pygame.K_RETURN] and GameOverRetry == True:
-				health_value = 3
-				score_value = 0
-				bg = pygame.image.load('sewer_background.jpg').convert()
-				GameOverRetry = False
-				dif = 4
-				GameOverX = -999990
-				GameOverY = -999990
-				CarX = -499
-				CarY = -500
-				EndX = -499
-				EndY = 10
-				textX = 10
-				textXX = 110
-				textY = 10
-				textYY = 80
-				HeartX = -100
-				HeartY = -40
 		
 			
 			if event.type == pygame.QUIT:
