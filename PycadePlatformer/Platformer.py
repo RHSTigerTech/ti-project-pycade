@@ -19,7 +19,7 @@ jumpPower = 10
 
 #testing level setup
 level = Level(levelMap, SCREEN)
-level.setupLevel(levelMap, 'Grass')
+level.setupLevel(levelMap, 1, 'Grass')
 while 1: # keeps gameloop running until game over
 
     pygame.time.delay(40) # sets action delay and slows down code for more responsive

@@ -107,5 +107,5 @@ class Ingame_Menu(pygame.sprite.Sprite):
             file = 'num_three.png'
 
         #set image and hitbox to selected file
-        self.image = pygame.image.load(file)
+        self.image = pygame.image.load(file).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)

@@ -49,7 +49,7 @@ class Player(pygame.sprite.Sprite):
                 pass
             elif self.falling == False:
                 self.jump()
-                self.image = pygame.image.load('chad_jumping_front.png')
+                self.image = pygame.image.load('chad_jumping_front.png').convert_alpha()
                 self.image_name = 'chad_front'
         elif self.keys[pygame.K_s] and self.direction.y == 0:
             if self.crouching == False:
@@ -81,17 +81,17 @@ class Player(pygame.sprite.Sprite):
         # change image
         if self.crouching == True:
             if direct == 'right':
-                self.image = pygame.image.load('chad_crouch_front.png')
+                self.image = pygame.image.load('chad_crouch_front.png').convert_alpha()
                 self.image_name = 'chad_crouch_front'
             else:        
-                self.image = pygame.image.load('chad_crouch_front.png')
+                self.image = pygame.image.load('chad_crouch_front.png').convert_alpha()
                 self.image_name = 'chad_crouch_front'
         else:
             if direct == 'right':
-                self.image = pygame.image.load('chad_idle_front.png')
+                self.image = pygame.image.load('chad_idle_front.png').convert_alpha()
                 self.image_name = 'chad_front'
             else:        
-                self.image = pygame.image.load('chad_idle_back.png')
+                self.image = pygame.image.load('chad_idle_back.png').convert_alpha()
                 self.image_name = 'chad_back'
 
     def crouch(self):
@@ -140,9 +140,6 @@ class Player(pygame.sprite.Sprite):
             self.health -= amount
             self.i_frame_count = 30
             self.i_frame = True
-            print('hit')
-        if self.health < 1:
-            print('Full Death')
 
     def powerup(self, power):
         if power =='plunger':

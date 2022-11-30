@@ -14,7 +14,8 @@ class Projectile(pygame.sprite.Sprite):
         self.direction.x = direction
 
         
-        #placeholder for image variable
+        #placeholders
+        self.cooldown = 0
         self.image = 0
 
         #projectile selector
@@ -36,9 +37,9 @@ class Projectile(pygame.sprite.Sprite):
 
         if self.type == 'plunger':
             if self.direction.x > 0:
-                self.image = pygame.image.load('plunger_right.png')
+                self.image = pygame.image.load('plunger_right.png').convert_alpha()
             elif self.direction.x < 0:
-                self.image = pygame.image.load('plunger_left.png')
+                self.image = pygame.image.load('plunger_left.png').convert_alpha()
 
         if self.cooldown >= 0:
             self.cooldown -= 1

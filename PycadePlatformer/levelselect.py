@@ -6,7 +6,7 @@ levelMap = ['                                            ',
             '                           xxbbbbbbbbbxxXXXX',
             '   DDD                  wxxXX         XXXXXX',
             '         S  S          xxXXXX         XXXXXX',
-            'P   p   xxxxxx        xxXXXXX         XXXXXX',
+            'P   p   xxxxxx^^^     xxXXXXX         XXXXXX',
             'xxxxxxxxXXXXXXxxxxxxxXXXXXXXX         XXXXXX',
             'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XXXXXX',
             'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XXXXXX']
@@ -34,6 +34,6 @@ S = S3AN
 w = banana gun shooter
 
 Obstacles
-s = Spike
+^ = Spike
 0 = Death Space - Gets placed in tile underneath
 '''

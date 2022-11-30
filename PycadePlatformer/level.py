@@ -8,6 +8,7 @@ from ingame_menu import Ingame_Menu
 from player import Player
 from enemie import Enemy
 from projectiles import Projectile
+from popup import Popup
 
 class Level:
     def __init__(self, leveldata, surface):
@@ -15,6 +16,7 @@ class Level:
         self.displaysurface = surface
         self.leveldata = leveldata
         self.world_shift = -8
+        self.round = False
         
         #placeholders
         self.plunger = 0
@@ -38,7 +40,7 @@ class Level:
             self.menu.add(menu_piece)
 
     #setup a level
-    def setupLevel(self, layout, lev_type):
+    def setupLevel(self, layout, lev_num, lev_type):
     #variables
         #Groups
         self.tiles = pygame.sprite.Group()
@@ -46,10 +48,14 @@ class Level:
         self.items = pygame.sprite.Group()
         self.mobs = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
+        self.popups = pygame.sprite.Group()
         #offseting the y value because [0] is first value
         tileYCount = -1
         #setup upper menu
         self.setupMenu()
+
+        #activates the round
+        self.round = True
 
         #turns strings in list into cells on the level
         for row in layout:
@@ -69,6 +75,9 @@ class Level:
                     self.tiles.add(tile)
                 elif cell == 'b':
                     tile = Tile((x,y), tilesize, lev_type, "bridge")
+                    self.tiles.add(tile)
+                elif cell == '^':
+                    tile = Tile((x,y), tilesize, lev_type, 'spike')
                     self.tiles.add(tile)
                 elif cell == "C":
                     coin = Coin((x,y), 0, 1)
@@ -99,6 +108,10 @@ class Level:
                 elif cell == '0':
                     tile = Tile((x,y + 64), tilesize, lev_type, '0')
                     self.tiles.add(tile)
+            #add logo if level is level one
+            if lev_num == 1:
+                logo = Popup((300,64), 'logo')
+                self.popups.add(logo)
 
     #level scroll
     def scroll(self):
@@ -135,7 +148,8 @@ class Level:
             if sprite.rect.colliderect(player.rect):
                 if sprite.type == '0':
                     player.health = 0
-                    self.player.remove(player)    
+                elif sprite.type == 'spike':
+                    player.damage(1)  
                 elif player.direction.x < 0:
                     player.rect.left = sprite.rect.right
                     player.direction.x = 0
@@ -176,12 +190,13 @@ class Level:
         for mob in self.mobs.sprites():
             mob.apply_gravity()
 
-        #Player vs Tiles - No death
+        #Player vs Tiles
         for sprite in self.tiles.sprites():
             if sprite.rect.colliderect(player.rect):
                 if sprite.type == '0':
                     player.health = 0
-                    self.player.remove(player)
+                elif sprite.type == 'spike':
+                    player.damage(1) 
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = 0
@@ -242,7 +257,6 @@ class Level:
                 if bullet.rect.colliderect(tile.rect):
                     if bullet.type != 'plunger':
                         self.bullets.remove(bullet)
-                        print('remove bullet')
                     else:
 
                         if bullet.direction.x < 0:
@@ -297,34 +311,47 @@ class Level:
                     self.plunger.direction.x = -1
             self.bullets.add(self.plunger)
 
+    #check for player death
+    def game_over(self):
+        player = self.player_sprite
+        if player.health <= 0:
+            self.player.remove(player)
+            self.round = False
     #run the game    
     def run(self):
-        
-        #collisions and movement
-        self.horizontal_movement_collisions()
-        self.player_sprite.key_input()
-        self.vertical_movement_collisions()
-        self.item_collisions()
-        self.scroll()
+        if self.round == True:
+            #collisions and movement
+            self.horizontal_movement_collisions()
+            self.player_sprite.key_input()
+            self.vertical_movement_collisions()
+            self.item_collisions()
+            self.scroll()
 
-        #Run Attacks
-        self.attacks()
-        self.player_sprite.immune()
+            #Run Attacks
+            self.attacks()
+            self.player_sprite.immune()
 
-        #update objects
-        self.tiles.update(self.world_shift)
-        self.items.update(self.world_shift)
-        self.mobs.update(self.world_shift)
-        self.bullets.update(self.world_shift)
+            #check for game/round over
+            self.game_over()
 
-        #draw the menu
-        self.menu.update(self.player_sprite.get_coin_count())
-        pygame.draw.rect(self.displaysurface, GREY, ((0,0),(1200,40)))
-        self.menu.draw(self.displaysurface)
+            #update objects
+            self.popups.update(self.world_shift)
+            self.tiles.update(self.world_shift)
+            self.items.update(self.world_shift)
+            self.mobs.update(self.world_shift)
+            self.bullets.update(self.world_shift)
+            
 
-        #draw everything else
-        self.tiles.draw(self.displaysurface)
-        self.items.draw(self.displaysurface)
-        self.player.draw(self.displaysurface)
-        self.mobs.draw(self.displaysurface)
-        self.bullets.draw(self.displaysurface)
+            #draw the menu
+            self.menu.update(self.player_sprite.get_coin_count())
+            pygame.draw.rect(self.displaysurface, GREY, ((0,0),(1200,40)))
+            self.menu.draw(self.displaysurface)
+
+            #draw everything else
+            self.popups.draw(self.displaysurface)
+            self.tiles.draw(self.displaysurface)
+            self.items.draw(self.displaysurface)
+            self.player.draw(self.displaysurface)
+            self.mobs.draw(self.displaysurface)
+            self.bullets.draw(self.displaysurface)
+            
