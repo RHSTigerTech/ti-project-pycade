@@ -19,7 +19,7 @@ jumpPower = 10
 
 #testing level setup
 level = Level(levelMap, SCREEN)
-level.setupLevel(levelMap, 'Grass')
+level.setupLevel(levelMap, 1, 'Grass')
 while 1: # keeps gameloop running until game over
 
     pygame.time.delay(40) # sets action delay and slows down code for more responsive
@@ -27,7 +27,6 @@ while 1: # keeps gameloop running until game over
     #Sets Screen Background
     SCREEN.fill(BLUE)
     level.run() #level creation / level running
-    
     #quit the game
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()

@@ -4,7 +4,7 @@ from levelselect import levelMap
 
 tilesize = 64   
 SCREENWIDTH = 1200
-SCREENHEIGHT = len(levelMap * tilesize)
+SCREENHEIGHT = len(levelMap * tilesize) #aka 768
 size = SCREENWIDTH, SCREENHEIGHT
 
 BLACK = 0, 0, 0
