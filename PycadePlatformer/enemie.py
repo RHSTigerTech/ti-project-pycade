@@ -1,7 +1,7 @@
 import pygame
 #import classes
 from settings import *
-
+# new comment
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, type):
