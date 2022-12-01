@@ -1,7 +1,7 @@
 import pygame
 #import classes
 from settings import *
-
+# more importattnt
 class Coin(pygame.sprite.Sprite):
     def __init__(self, pos, size, value):
         super().__init__()
