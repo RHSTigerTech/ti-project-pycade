@@ -157,6 +157,8 @@ while run:
 		# pygame.time.delay(20)
 
 		clock.tick(FPS)
+
+		print(BarrelX)
 		
 		#scroll background + speeds scroll
 		scroll -= dif
@@ -184,7 +186,7 @@ while run:
 		DontEatX -= dif
 		EndX -= dif
 		RottenMeatX -= dif
-		#FrontBarrels -= dif
+		BarrelX -= dif
 
 
 		#update animation
@@ -690,7 +692,29 @@ while run:
 				Pipe1X = 6000
 				Pipe1Y = -2
 				EndX = 6600
+			if NewBack == 15: 
+				LadderX = 2800
+				LadderY = -2
+				TunnelX = 3700
+				TunnelY = 10
+				Pipe2X = 2000
+				Pipe2Y = 10
+				Pipe1X = 3200
+				Pipe1Y = -2
+				EndX = 3700
 
+		if BarrelX <= -500:
+			NewBarrel = random.randint(1, 5)
+			if NewBarrel == 1:
+				BarrelX = 1800
+			if NewBarrel == 2:
+				BarrelX = 2800
+			if NewBarrel == 3:
+				BarrelX = 5800
+			if NewBarrel == 4:
+				BarrelX = 7800
+			if NewBarrel == 5:
+				BarrelX = 9800
 
 
 
@@ -1248,13 +1272,13 @@ while run:
 		screen.blit(SewerPipe2, (Pipe2X, Pipe2Y))
 		screen.blit(SewerPipe, (Pipe1X, Pipe1Y))
 		screen.blit(FrontBarrels, (BarrelX, BarrelY))
-		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(Trash2, (Trash2X, Trash2Y))
 		screen.blit(Trash1, (Trash1X, Trash1Y))
 		screen.blit(RottenMeat, (RottenMeatX, RottenMeatY))
 		screen.blit(GoWeegyGo, (WedgyX, WedgyY))
 		screen.blit(HalfaCar, (CarX, CarY))
 		screen.blit(Barba, (BarbaX, BarbaY))
+		screen.blit(Coin, (COINMOVEX, COINMOVEY))
 		screen.blit(Meat, (MeatX, MeatY))
 		screen.blit(animation_list[action][frame], (x, y))
 		screen.blit(Heart, (HeartX, HeartY))
@@ -1265,7 +1289,6 @@ while run:
 			dif = 0
 			scroll = 0
 			bg = pygame.image.load('Black.jpg').convert()
-			bg_width = bg.get_width()
 			GameOverX = 0
 			GameOverY = 0
 
@@ -1292,6 +1315,7 @@ while run:
 			keys = pygame.key.get_pressed()
 
 			if keys[pygame.K_RETURN] and GameOverRetry == True:
+				action = 1
 				health_value = 3
 				score_value = 0
 				bg = pygame.image.load('sewer_background.jpg').convert()
