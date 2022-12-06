@@ -158,14 +158,14 @@ while run:
 
 		clock.tick(FPS)
 
-		print(BarrelX)
+		#print(COINMOVEX)
 		
 		#scroll background + speeds scroll
 		scroll -= dif
 		current_time = pygame.time.get_ticks()
 		if current_time % 5000 < 10:
 			dif += 1
-			print('Speed up by', dif,)
+			#print('Speed up by', dif,)
 
 		#reset scroll
 		if abs(scroll) > bg_width:
@@ -199,7 +199,7 @@ while run:
 
 		#If the coin reaches the edge of the screen then randomly choose a new lane to respawn
 		if COINMOVEX <= -100:
-			CoinSpot = random.randint(1, 3)
+			CoinSpot = random.randint(1, 6)
 			if CoinSpot == 1:
 				COINMOVEX = 1800
 				COINMOVEY = 250
@@ -208,6 +208,15 @@ while run:
 				COINMOVEY = 400
 			if CoinSpot == 3:
 				COINMOVEX = 1800
+				COINMOVEY = 520
+			if CoinSpot == 4:
+				COINMOVEX = 2800
+				COINMOVEY = 250
+			if CoinSpot == 5:
+				COINMOVEX = 2800
+				COINMOVEY = 400
+			if CoinSpot == 6:
+				COINMOVEX = 2800
 				COINMOVEY = 520
 		
 		if CarX <= -250:
@@ -613,7 +622,8 @@ while run:
 
 		#Background Respawn so then it respawns and moves the the background again so its not plain and boring
 		if EndX <= -500:
-			NewBack = random.randint(1, 14)
+			NewBack = random.randint(1, 19)
+			print(NewBack)
 			if NewBack == 1:
 				LadderX = 1800
 				LadderY = -2
@@ -651,11 +661,11 @@ while run:
 			if NewBack == 8:
 				Pipe2X = 2000
 				Pipe2Y = 10
-				TunnelX = 2700
+				TunnelX = 3700
 				TunnelY = 10
-				Pipe1X = 3200
+				Pipe1X = 4200
 				Pipe1Y = -2
-				EndX = 3700
+				EndX = 5700
 			if NewBack == 9:
 				Pipe2X = 2000
 				Pipe2Y = 10
@@ -684,7 +694,7 @@ while run:
 				LadderX = 2000
 				LadderY = -2
 				EndX = 3000
-			if NewBack == 14:
+			if NewBack == 14 or 15 or 16:
 				Pipe2X = 2200
 				Pipe2Y = 10
 				LadderX = 4500
@@ -692,16 +702,16 @@ while run:
 				Pipe1X = 6000
 				Pipe1Y = -2
 				EndX = 6600
-			if NewBack == 15: 
-				LadderX = 2800
+			if NewBack == 17 or 18 or 19: 
+				LadderX = 4800
 				LadderY = -2
-				TunnelX = 3700
+				TunnelX = 8700
 				TunnelY = 10
 				Pipe2X = 2000
 				Pipe2Y = 10
-				Pipe1X = 3200
+				Pipe1X = 6700
 				Pipe1Y = -2
-				EndX = 3700
+				EndX = 9700
 
 		if BarrelX <= -500:
 			NewBarrel = random.randint(1, 5)
@@ -722,7 +732,7 @@ while run:
 		#If Crockettdile and Coin are in the same lane then randomly choose another lane to spawn in
 		if COINMOVEX <= 400 and y == 170 and COINMOVEY == 250:
 			score_value += 5
-			CoinSpot = random.randint(1, 3)
+			CoinSpot = random.randint(1, 6)
 			if CoinSpot == 1:
 				COINMOVEX = 1800
 				COINMOVEY = 250
@@ -731,10 +741,19 @@ while run:
 				COINMOVEY = 400
 			if CoinSpot == 3:
 				COINMOVEX = 1800
+				COINMOVEY = 520
+			if CoinSpot == 4:
+				COINMOVEX = 2800
+				COINMOVEY = 250
+			if CoinSpot == 5:
+				COINMOVEX = 2800
+				COINMOVEY = 400
+			if CoinSpot == 6:
+				COINMOVEX = 2800
 				COINMOVEY = 520
 		if COINMOVEX <= 400 and y == 300 and COINMOVEY == 400:
 			score_value += 5
-			CoinSpot = random.randint(1, 3)
+			CoinSpot = random.randint(1, 6)
 			if CoinSpot == 1:
 				COINMOVEX = 1800
 				COINMOVEY = 250
@@ -744,10 +763,18 @@ while run:
 			if CoinSpot == 3:
 				COINMOVEX = 1800
 				COINMOVEY = 520
+			if CoinSpot == 4:
+				COINMOVEX = 2800
+				COINMOVEY = 250
+			if CoinSpot == 5:
+				COINMOVEX = 2800
+				COINMOVEY = 400
+			if CoinSpot == 6:
+				COINMOVEX = 2800
+				COINMOVEY = 520
 		if COINMOVEX <= 400 and y == 430 and COINMOVEY == 520:
 			score_value += 5
-			print(score_value)
-			CoinSpot = random.randint(1, 3)
+			CoinSpot = random.randint(1, 6)
 			if CoinSpot == 1:
 				COINMOVEX = 1800
 				COINMOVEY = 250
@@ -756,6 +783,15 @@ while run:
 				COINMOVEY = 400
 			if CoinSpot == 3:
 				COINMOVEX = 1800
+				COINMOVEY = 520
+			if CoinSpot == 4:
+				COINMOVEX = 2800
+				COINMOVEY = 250
+			if CoinSpot == 5:
+				COINMOVEX = 2800
+				COINMOVEY = 400
+			if CoinSpot == 6:
+				COINMOVEX = 2800
 				COINMOVEY = 520
 		
 		#If Meat is Eaten
@@ -1341,7 +1377,6 @@ while run:
 
 			#eating motion
 			if keys[pygame.K_SPACE]:
-				# print('space')
 				if cooldown == False:
 					if is_eating == True:
 						action = 1
