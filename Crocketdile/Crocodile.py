@@ -49,8 +49,8 @@ button_press_time = 0
 
 x = 0
 y = 300
-COINMOVEY = 400
-COINMOVEX = 1800
+COINMOVEY = 401
+COINMOVEX = -1800
 MeatX = 1000
 MeatY = 900
 Trash1X = 1000
@@ -78,7 +78,7 @@ BarbaX = -1000
 BarbaY = -1000
 GameOverX = -999990
 GameOverY = -999990
-BarrelX = 10
+BarrelX = -1000
 BarrelY = 120
 DontEatX = 9000
 DontEatY = -666
@@ -149,6 +149,9 @@ def slow_down(slow):
 		return slow
 	else:
 		return slow
+
+
+
 
 
 run = True
@@ -694,7 +697,7 @@ while run:
 				LadderX = 2000
 				LadderY = -2
 				EndX = 3000
-			if NewBack == 14 or 15 or 16:
+			if NewBack == 14:
 				Pipe2X = 2200
 				Pipe2Y = 10
 				LadderX = 4500
@@ -702,7 +705,7 @@ while run:
 				Pipe1X = 6000
 				Pipe1Y = -2
 				EndX = 6600
-			if NewBack == 17 or 18 or 19: 
+			if NewBack == 15:
 				LadderX = 4800
 				LadderY = -2
 				TunnelX = 8700
@@ -712,6 +715,42 @@ while run:
 				Pipe1X = 6700
 				Pipe1Y = -2
 				EndX = 9700
+			if NewBack == 16:
+				Pipe2X = 2200
+				Pipe2Y = 10
+				LadderX = 4500
+				LadderY = -2
+				Pipe1X = 6000
+				Pipe1Y = -2
+				EndX = 6600
+			if NewBack == 17:
+				LadderX = 4800
+				LadderY = -2
+				TunnelX = 8700
+				TunnelY = 10
+				Pipe2X = 2000
+				Pipe2Y = 10
+				Pipe1X = 6700
+				Pipe1Y = -2
+				EndX = 9700
+			if NewBack == 18:
+				Pipe2X = 2200
+				Pipe2Y = 10
+				LadderX = 4500
+				LadderY = -2
+				Pipe1X = 6000
+				Pipe1Y = -2
+				EndX = 6600
+			if NewBack == 19:
+				LadderX = 5800
+				LadderY = -2
+				TunnelX = 10700
+				TunnelY = 10
+				Pipe2X = 2000
+				Pipe2Y = 10
+				Pipe1X = 7707
+				Pipe1Y = -2
+				EndX = 11700
 
 		if BarrelX <= -500:
 			NewBarrel = random.randint(1, 5)
