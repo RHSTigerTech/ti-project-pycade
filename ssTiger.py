@@ -2,6 +2,9 @@ import pygame, os
 import time
 import random
 from os import path
+from pygame.locals import *
+from pygame import mixer
+ 
 
 os.chdir('tiger_images')
 
@@ -19,7 +22,7 @@ pygame.mixer.init()
 WIDTH = 480 
 HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Tiger Shooter!")
+pygame.display.set_caption("Tiger")
 clock = pygame.time.Clock()
 FPS = 60
 game_folder = path.dirname(__file__)
@@ -27,6 +30,8 @@ sprite_folder = path.join(game_folder, "tiger_images")
 score = 0
 font_name = pygame.font.match_font("comicsansms")
 gameDisplay = pygame.display.set_mode((480, 600))
+lose = 0
+
 
 #Classes
 class Player(pygame.sprite.Sprite):
@@ -40,6 +45,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom = HEIGHT - 10
         self.speed_x = 0
         self.speed = 10
+       
+   
     
     def shoot_bullet(self):
         b = Bullet(self.rect.centerx, self.rect.top)
@@ -61,9 +68,15 @@ class Player(pygame.sprite.Sprite):
         if keystate[pygame.K_LEFT]:
             self.speed_x = -self.speed
         self.rect.x += self.speed_x
+        if lose == 1:
+             self.rect.y = random.randrange(15000, 100000)
+             self.speed_y = random.randrange(2, 8)
+             self.speed_x = random.randrange(-3, 3)
+    
+
         
     def WL(self):
-        if score == 20:
+        if score == 9000:
         #W = pygame.image.load('TigerW.jpg').convert()
          screen.blit(TigerW, (0, 580))
          screen.blit(TigerW, background_rect)
@@ -89,6 +102,7 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.y = random.randrange(-150, -100)
         self.speed_y = random.randrange(2, 8)
         self.speed_x = random.randrange(-3, 3)
+      
    
 
     def spawn_new_wolf(self):
@@ -100,6 +114,11 @@ class Wolf(pygame.sprite.Sprite):
     def boundary(self):
         if self.rect.right > WIDTH + 5 or self.rect.right < -5 or self.rect.top > HEIGHT + 5:
             self.spawn_new_wolf()
+        if score >= 9000:
+             self.rect.y = random.randrange(15000, 100000)
+             self.speed_y = random.randrange(2, 8)
+             self.speed_x = random.randrange(-3, 3)
+        
 
     def update(self):
         self.rect.y += self.speed_y
@@ -177,7 +196,7 @@ while running:
            
 
     #Update
-    if score <= 20:
+    if score <= 9000:
         all_sprites.update()
 
 
@@ -190,6 +209,8 @@ while running:
             gameDisplay.blit(wolf_img, (999, 999))
             gameDisplay.blit(bullet_img, (999, 999))
             gameDisplay.blit(player_img, (999, 999))
+            lose += 1
+            spawn_new_wolf = False
             
 
             #L = pygame.image.load("wolfL.png").convert()
@@ -201,13 +222,13 @@ while running:
         bullet_collision = pygame.sprite.groupcollide(all_wolfs, all_bullets, True, True)
         for collision in bullet_collision:
             spawn_new_wolf()
-            score += 10    
+            score += 10
         
 
 
     
 
-    if score >= 20:
+    if score >= 9000:
         player.WL()
         background = get_image("TigerW.jpg")
         #background_rect = background.get_rect()
@@ -232,6 +253,7 @@ while running:
     message_to_screen("Score: " + str(score), WHITE, 24, WIDTH/2, 10) 
    
 
+ 
     #Updte adter drawing everything to screen
     pygame.display.update()
 
