@@ -29,16 +29,11 @@ HalfaCar = pygame.image.load("halfAcar.png")
 FrontBarrels = pygame.image.load("frontBarrel.png")
 GoWeegyGo = pygame.image.load("Wedgysavehim.png")
 Heart = pygame.image.load("heart.png")
-Barba = pygame.image.load("barberCoin.png")
+Barba = pygame.image.load("barberCoin_400size.png")
 GameOverScreeny = pygame.image.load("gameOver_screen.jpg")
 DontEatHim = pygame.image.load("DontEatGoWeegy.png")
 EndofBackStuff = pygame.image.load("EndofBackStuff.png")
 RottenMeat = pygame.image.load("RottenMeat.png")
-
-#Barba image size
-default_size = (250, 250)
-Barba = pygame.transform.scale(Barba, default_size)
-default_position = (200, 200)
 
 
 clock = pygame.time.Clock()
@@ -74,8 +69,8 @@ WedgyX = 1500
 WedgyY = -666
 HeartX = -100
 HeartY = -40
-BarbaX = -1000
-BarbaY = -1000
+BarbaX = 99999999
+BarbaY = -510
 GameOverX = -999990
 GameOverY = -999990
 BarrelX = -1000
@@ -190,6 +185,7 @@ while run:
 		EndX -= dif
 		RottenMeatX -= dif
 		BarrelX -= dif
+		BarbaX -= dif
 
 
 		#update animation
@@ -221,9 +217,10 @@ while run:
 			if CoinSpot == 6:
 				COINMOVEX = 2800
 				COINMOVEY = 520
+
 		
 		if CarX <= -250:
-			NewCar = random.randint(1, 53)
+			NewCar = random.randint(1, 64)
 			if NewCar == 1:
 				CarX = 5500
 				CarY = 200
@@ -243,10 +240,8 @@ while run:
 				WedgyX = 1700
 				WedgyY = 320
 			if NewCar == 3:
-				CarX = 5000
+				CarX = 2000
 				CarY = 460
-				MeatX = 3000
-				MeatY = 444
 			if NewCar == 4:
 				CarX = 5500
 				CarY = 200
@@ -599,6 +594,86 @@ while run:
 				Trash1Y = 340
 				Trash2X = 1900
 				Trash2Y = 328
+			if NewCar == 54:
+				CarX = 5500
+				CarY = 330
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 3533
+				Trash2Y = 328
+			if NewCar == 55:
+				CarX = 2700
+				CarY = 200
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 2700
+				Trash2Y = 430
+			if NewCar == 56:
+				CarX = 2700
+				CarY = 200
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 2700
+				Trash2Y = 430
+				RottenMeatX = 2700
+				RottenMeatY = 444
+			if NewCar == 57:
+				CarX = 2705
+				CarY = 460
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 2700
+				Trash2Y = 195
+				RottenMeatX = 2700
+				RottenMeatY = 310
+			if NewCar == 58:
+				CarX = 2700
+				CarY = 200
+				Trash1X = 1900
+				Trash1Y = 340
+				Trash2X = 2700
+				Trash2Y = 328
+				RottenMeatX = 2700
+				RottenMeatY = 580
+			if NewCar == 59:
+				BarbaX = 1800
+				BarbaY = 266
+				CarX = 2000
+				CarY = -500
+			if NewCar == 60:
+				BarbaX = 1800
+				BarbaY = 410
+				CarX = 2000
+				CarY = -500
+			if NewCar == 61:
+				BarbaX = 1800
+				BarbaY = 530
+				CarX = 2000
+				CarY = -500
+			if NewCar == 62:
+				BarbaX = 1800
+				BarbaY = 266
+				CarX = 2000
+				CarY = 460
+			if NewCar == 63:
+				Trash1X = 1800
+				Trash1Y = 200
+				Trash2X = 2500
+				Trash2Y = 328
+				BarbaX = 3200
+				BarbaY = 530
+				CarX = 3700
+				CarY = 330
+			if NewCar == 64:
+				Trash2X = 1900
+				Trash2Y = 195
+				Trash1X = 1901
+				Trash1Y = 460
+				BarbaX = 2800
+				BarbaY = 410
+				CarX = 3200
+				CarY = 330
+
 
 
 				
@@ -622,6 +697,9 @@ while run:
 
 		if RottenMeatX <= -150:
 			RottenMeatY = -100
+
+		if BarbaX <= -170:
+			BarbaY = -500
 
 		#Background Respawn so then it respawns and moves the the background again so its not plain and boring
 		if EndX <= -500:
@@ -751,6 +829,14 @@ while run:
 				Pipe1X = 7707
 				Pipe1Y = -2
 				EndX = 11700
+			if NewBack == 20:
+				Pipe2X = 2000
+				Pipe2Y = 10
+				TunnelX = 4700
+				TunnelY = 10
+				Pipe1X = 6500
+				Pipe1Y = -2
+				EndX = 7500
 
 		if BarrelX <= -500:
 			NewBarrel = random.randint(1, 5)
@@ -866,6 +952,20 @@ while run:
 			dif = 4
 			score_value -= 10
 			health_value -= 2
+
+		#If Braden Barba is touched
+		if BarbaX <= 380 and y == 170 and BarbaY == 266:
+			BarbaY = -500
+			dif += 5
+			score_value += 20
+		if BarbaX <= 380 and y == 300 and BarbaY == 410:
+			BarbaY = -500
+			dif += 5
+			score_value += 20
+		if BarbaX <= 380 and y == 430 and BarbaY == 530:
+			BarbaY = -500
+			dif += 5
+			score_value += 20
 
 		#If Car is Touched
 		if CarX <= 300 and y == 170 and CarY == 200:
