@@ -1,15 +1,15 @@
-levelMap = ['                                            ',
-            '                                            ',
-            '                                            ',
-            '                                        xxxx',
-            '                                        XXXX',
-            '                           xxbbbbbbbbbxxXXXX',
-            '   DDD                  wxxXX         XXXXXX',
-            '         S  S          xxXXXX         XXXXXX',
-            'P   p   xxxxxx^^^     xxXXXXX         XXXXXX',
-            'xxxxxxxxXXXXXXxxxxxxxXXXXXXXX         XXXXXX',
-            'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XXXXXX',
-            'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX         XXXXXX']
+levelMap_1 = ['                                                                    xxxxxxXXXXXXsssssssssssss             ',
+              '                                                               xxxxxXXXXXXXssssssssss             ',
+              '                                                                  XXXXsssssssss             ',
+              '                                                                  # # # # #                 ',
+              '                                                                ssssssssssssss             ',
+              '                                              w          p     sssssssssssssssss             ',
+              '                                         xbbbbbbbbbbbbbbbbbbbbbsssssssssssssssss             ',
+              '                                        xX                     sssssssssssssssssss            ',
+              ' P    DDDDDD       h    S   h          xXX                     sssssssssssssssssssssssssssss          ',
+              'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXXX                     sssssssssssssssssssssssssssss             ',
+              'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                     sssssssssssssssssssssssssssss             ',
+              'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                     sssssssssssssssssssssssssssss             ']
             
 
 #legend
@@ -17,6 +17,9 @@ levelMap = ['                                            ',
 Tiles (some change with level theme)
 x = top layer ground
 X = under layers ground
+S = stone
+# = Crate (Breakable Tile)
+h = Half Crate (Breakable Tile)
 
 Player
 P = player starting spawn

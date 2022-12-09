@@ -1,10 +1,10 @@
 import pygame
-from levelselect import levelMap
+from levelselect import levelMap_1
     
 
 tilesize = 64   
 SCREENWIDTH = 1200
-SCREENHEIGHT = len(levelMap * tilesize) #aka 768
+SCREENHEIGHT = len(levelMap_1 * tilesize) #aka 768
 size = SCREENWIDTH, SCREENHEIGHT
 
 BLACK = 0, 0, 0

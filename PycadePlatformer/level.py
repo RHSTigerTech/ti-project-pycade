@@ -79,6 +79,15 @@ class Level:
                 elif cell == '^':
                     tile = Tile((x,y), tilesize, lev_type, 'spike')
                     self.tiles.add(tile)
+                elif cell == '#':
+                    tile = Tile((x,y), tilesize, lev_type, 'crate')
+                    self.tiles.add(tile)
+                elif cell == 'h':
+                    tile = Tile((x,y), tilesize, lev_type, 'half_crate')
+                    self.tiles.add(tile)
+                elif cell == 's':
+                    tile = Tile((x,y), tilesize, lev_type, 'stone')
+                    self.tiles.add(tile)
                 elif cell == "C":
                     coin = Coin((x,y), 0, 1)
                     self.items.add(coin)
@@ -257,14 +266,16 @@ class Level:
                 if bullet.rect.colliderect(tile.rect):
                     if bullet.type != 'plunger':
                         self.bullets.remove(bullet)
-                    else:
-
-                        if bullet.direction.x < 0:
-                            bullet.rect.left = tile.rect.right
-                            bullet.direction.x = 0
-                        elif bullet.direction.x > 0:
-                            bullet.rect.right = tile.rect.left
-                            bullet.direction.x = 0
+                    elif bullet.type == 'plunger':
+                        if tile.type == 'crate':
+                            self.tiles.remove(tile)
+                        else:
+                            if bullet.direction.x < 0:
+                                bullet.rect.left = tile.rect.right
+                                bullet.direction.x = 0
+                            elif bullet.direction.x > 0:
+                                bullet.rect.right = tile.rect.left
+                                bullet.direction.x = 0
         #bullet hitting player
         for bullet in self.bullets.sprites():
             if bullet.rect.colliderect(player.rect):
@@ -340,12 +351,10 @@ class Level:
             self.items.update(self.world_shift)
             self.mobs.update(self.world_shift)
             self.bullets.update(self.world_shift)
-            
-
-            #draw the menu
-            self.menu.update(self.player_sprite.get_coin_count())
-            pygame.draw.rect(self.displaysurface, GREY, ((0,0),(1200,40)))
-            self.menu.draw(self.displaysurface)
+            #remove old bullets
+            for bullet in self.bullets.sprites():
+                if bullet.lifespan <= 0:
+                    self.bullets.remove(bullet)
 
             #draw everything else
             self.popups.draw(self.displaysurface)
@@ -355,3 +364,7 @@ class Level:
             self.mobs.draw(self.displaysurface)
             self.bullets.draw(self.displaysurface)
             
+            #draw the menu
+            self.menu.update(self.player_sprite.get_coin_count())
+            pygame.draw.rect(self.displaysurface, GREY, ((0,0),(1200,40)))
+            self.menu.draw(self.displaysurface)
