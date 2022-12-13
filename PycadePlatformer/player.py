@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
 
         self.coin_count = 0
         #counters
-        self.walking_count = 0
+        self.step = 0
         self.i_frame_count = 0
 
     def key_input(self):
@@ -44,6 +44,7 @@ class Player(pygame.sprite.Sprite):
             self.player_animate()
         else:
             self.direction.x = 0
+            self.step = 0
         if self.keys[pygame.K_SPACE]:
             if self.crouching == True:
                 pass
@@ -78,21 +79,52 @@ class Player(pygame.sprite.Sprite):
         elif self.direction.x < 0:
             direct = 'left'
 
-        # change image
-        if self.crouching == True:
-            if direct == 'right':
-                self.image = pygame.image.load('chad_crouch_front.png').convert_alpha()
-                self.image_name = 'chad_crouch_front'
-            else:        
-                self.image = pygame.image.load('chad_crouch_front.png').convert_alpha()
-                self.image_name = 'chad_crouch_front'
-        else:
-            if direct == 'right':
+        # walking animation - right
+        if direct == 'right':
+            if self.step == 0:
                 self.image = pygame.image.load('chad_idle_front.png').convert_alpha()
-                self.image_name = 'chad_front'
-            else:        
-                self.image = pygame.image.load('chad_idle_back.png').convert_alpha()
-                self.image_name = 'chad_back'
+            elif self.step == 1:
+                self.image = pygame.image.load('chad_walk1_right.png').convert_alpha()
+            elif self.step == 2:
+                self.image = pygame.image.load('chad_walk2_right.png').convert_alpha()
+            elif self.step == 3:
+                self.image = pygame.image.load('chad_walk3_right.png').convert_alpha()
+            elif self.step == 4:
+                self.image = pygame.image.load('chad_walk4_right.png').convert_alpha()
+            elif self.step == 5:
+                self.image = pygame.image.load('chad_walk5_right.png').convert_alpha()
+                self.step = 0
+        if direct == 'left':
+            if self.step == 0:
+                self.image = pygame.image.load('chad_idle_front.png').convert_alpha()
+            elif self.step == 1:
+                self.image = pygame.image.load('chad_walk1_back.png').convert_alpha()
+            elif self.step == 2:
+                self.image = pygame.image.load('chad_walk2_back.png').convert_alpha()
+            elif self.step == 3:
+                self.image = pygame.image.load('chad_walk3_back.png').convert_alpha()
+            elif self.step == 4:
+                self.image = pygame.image.load('chad_walk4_back.png').convert_alpha()
+            elif self.step == 5:
+                self.image = pygame.image.load('chad_walk5_back.png').convert_alpha()
+                self.step = 0
+        self.step += 1
+
+        # change image
+        # if self.crouching == True:
+        #     if direct == 'right':
+        #         self.image = pygame.image.load('chad_crouch_front.png').convert_alpha()
+        #         self.image_name = 'chad_crouch_front'
+        #     else:        
+        #         self.image = pygame.image.load('chad_crouch_front.png').convert_alpha()
+        #         self.image_name = 'chad_crouch_front'
+        # else:
+        #     if direct == 'right':
+        #         self.image = pygame.image.load('chad_idle_front.png').convert_alpha()
+        #         self.image_name = 'chad_front'
+        #     else:        
+        #         self.image = pygame.image.load('chad_idle_back.png').convert_alpha()
+        #         self.image_name = 'chad_back'
 
     def crouch(self):
 
