@@ -23,6 +23,9 @@ class Tile(pygame.sprite.Sprite):
             elif tile_type == 'spike':
                 self.image = pygame.image.load('spikes_20x64.png').convert_alpha()
                 positon[1] += 44
+            elif tile_type == 'stone':
+                self.image = pygame.image.load('stone.png').convert_alpha()
+            
 
         #non-level dependant tiles
         if self.image == 0:
@@ -32,7 +35,13 @@ class Tile(pygame.sprite.Sprite):
             else:
                 self.image = pygame.Surface((size, size))
                 self.image.fill(RED)
-            
+        elif self.type == 'crate':
+            self.image = pygame.image.load('crate.png').convert_alpha()
+        elif self.type == 'half_crate':
+            positon[1] += 32
+            self.image = pygame.image.load('half_crate.png').convert_alpha()
+
+        #set hitbox
         self.rect = self.image.get_rect(topleft = positon)
 
     def update(self, x_shift):

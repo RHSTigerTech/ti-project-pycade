@@ -1,7 +1,7 @@
 import pygame, sys, os
 #import classes
 from settings import *
-from levelselect import levelMap
+from levelselect import levelMap_1
 from level import Level
 
 pygame.init() #initialize pygame
@@ -18,8 +18,8 @@ playerHeight = 50
 jumpPower = 10
 
 #testing level setup
-level = Level(levelMap, SCREEN)
-level.setupLevel(levelMap, 1, 'Grass')
+level = Level(levelMap_1, SCREEN)
+level.setupLevel(levelMap_1, 1, 'Grass')
 while 1: # keeps gameloop running until game over
 
     pygame.time.delay(40) # sets action delay and slows down code for more responsive
