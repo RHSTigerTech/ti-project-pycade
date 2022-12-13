@@ -1,6 +1,5 @@
-import pygame
+import pygame, os
 from levelselect import levelMap
-    
 
 tilesize = 64   
 SCREENWIDTH = 1200
