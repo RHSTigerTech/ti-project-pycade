@@ -4,6 +4,7 @@ import pygame
 pygame.init()
 from random import uniform, randint
 import time
+import os
 
 windowSize = [1366, 768]
 screen = pygame.display.set_mode(windowSize)
@@ -11,6 +12,9 @@ backcolour = pygame.color.Color('#010520')
 
 #sets the window size
 gameDisplay = pygame.display.set_mode((1366, 768))
+
+#file for images
+os.chdir('Arcade_Project_Images')
 
 #loads in your pics to use later
 Titlep = pygame.image.load('Title.jpeg')

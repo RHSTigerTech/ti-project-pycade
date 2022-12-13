@@ -1,6 +1,7 @@
 import pygame
 #import classes
 from settings import *
+# new comment
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, type):
@@ -25,10 +26,10 @@ class Enemy(pygame.sprite.Sprite):
         if self.type == 'S3AN':
             self.pos = [pos[0] + 16, pos[1]]
             self.image = pygame.image.load('ememy_s3an.png')
+            self.pos[1] += 32
             #stats
             self.speed = 1
-            #size offset
-            self.pos[1] += 32
+
         elif self.type == 'weegy':
             self.image = pygame.image.load('weegy_gun.png')
             #stats
