@@ -3,8 +3,8 @@ from turtle import back
 import pygame
 pygame.init()
 from random import uniform, randint
-import time
 import os
+
 
 windowSize = [1366, 768]
 screen = pygame.display.set_mode(windowSize)
