@@ -23,6 +23,8 @@ class Player(pygame.sprite.Sprite):
         self.health = BASEHEALTH
         self.falling = False
         self.attack_cooldown = 20
+        self.shop = False
+        self.shopcooldown = 0
 
         self.status = 'chad' #powerup status
         self.shield = 0 #extra health
@@ -61,13 +63,18 @@ class Player(pygame.sprite.Sprite):
 
         if self.keys[pygame.K_e] and self.crouching == False and self.status == 'plunger':
             self.attack_cooldown -= 1
-            # print(self.attack_cooldown)
+
         #perform an attack when e isn't pressed
         elif self.attack_cooldown < 0:
             self.plunger = True
             self.attack_cooldown = 20 #or maximum cooldown
         else:
             self.attack_cooldown = 20 #or maximum cooldown
+        
+        #open shop
+        if self.keys[pygame.K_q] and self.shopcooldown < 0:
+            self.shop = True
+            self.shopcooldown = 25
 
     def player_animate(self):
         #set variables

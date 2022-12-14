@@ -1,5 +1,5 @@
 import pygame
-QUOTES = ['quote 1', 'quote 2', 'quote 3', 'lol this quote is to long to fit in this tiny box. bug', 'Sean is such a Calvert']
+QUOTES = ['There is 10 minutes left, I am playing clash', 'Is it because I am disabled', 'Devin stinks', 'lol this quote is to long to fit in this tiny box. bug', 'Sean is such a Calvert']
 
 class Picture(pygame.sprite.Sprite):
     def __init__(self, img, pos):

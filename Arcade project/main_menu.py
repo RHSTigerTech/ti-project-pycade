@@ -2,7 +2,7 @@ import pygame, os, sys, random
 from picture import Picture, QUOTES
 
 pygame.font.init()
-
+ 
 #redirect to image folder:
 os.chdir('Arcade_Project_Images')
 

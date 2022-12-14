@@ -1,4 +1,4 @@
-import pygame
+import pygame, os, sys
 #import classes
 from settings import *
 from tiles import Tile
@@ -16,11 +16,14 @@ class Level:
         self.displaysurface = surface
         self.leveldata = leveldata
         self.world_shift = -8
+
         self.round = False
+        self.shop = False
         
         #placeholders
         self.plunger = 0
         self.player_sprite = 0
+
 
     #draw the upper screen menu
     def setupMenu(self):
@@ -39,6 +42,17 @@ class Level:
             menu_piece = Ingame_Menu(digit[0], digit[1], digit[2], digit[3])
             self.menu.add(menu_piece)
 
+    #check for shop open:
+    def shop_loop(self):
+        self.shop.draw(self.displaysurface)
+
+        for event in pygame.event.get():
+            keys = pygame.key.get_pressed()
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if keys[pygame.K_q]:
+                self.player_sprite.shop = False
+        pygame.display.update()
     #setup a level
     def setupLevel(self, layout, lev_num, lev_type):
     #variables
@@ -49,6 +63,7 @@ class Level:
         self.mobs = pygame.sprite.Group()
         self.bullets = pygame.sprite.Group()
         self.popups = pygame.sprite.Group()
+        self.shop = pygame.sprite.Group()
         #offseting the y value because [0] is first value
         tileYCount = -1
         #setup upper menu
@@ -113,6 +128,11 @@ class Level:
                 logo = Popup((300,64), 'logo')
                 self.popups.add(logo)
 
+            #add shop parts together
+            shoplist = [((100,100),'shop_bg'),((200,200), 'coin'),((200,300), 'coin'),((200,400), 'coin'),((200,500), 'coin'),((270,210),'slot1'),((270,310),'slot2'),((270,410),'slot3'),((270,510),'slot4')]
+            for shop in shoplist:
+                img = Popup(shop[0], shop[1])
+                self.shop.add(img)
     #level scroll
     def scroll(self):
         #shortened down variables
@@ -320,6 +340,8 @@ class Level:
     #run the game    
     def run(self):
         if self.round == True:
+            
+
             #collisions and movement
             self.horizontal_movement_collisions()
             self.player_sprite.key_input()
@@ -333,6 +355,7 @@ class Level:
 
             #check for game/round over
             self.game_over()
+            #check for shop open
 
             #update objects
             self.popups.update(self.world_shift)
@@ -340,6 +363,7 @@ class Level:
             self.items.update(self.world_shift)
             self.mobs.update(self.world_shift)
             self.bullets.update(self.world_shift)
+            self.player_sprite.shopcooldown -= 1
             
 
             #draw the menu
@@ -354,4 +378,8 @@ class Level:
             self.player.draw(self.displaysurface)
             self.mobs.draw(self.displaysurface)
             self.bullets.draw(self.displaysurface)
+
+            while self.player_sprite.shop == True:
+                self.shop_loop()
+            
             
