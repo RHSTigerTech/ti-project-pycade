@@ -2253,7 +2253,7 @@ while run:
 
 		#Background Respawn so then it respawns and moves the the background again so its not plain and boring
 		if EndX <= -500:
-			NewBack = random.randint(1, 28)
+			NewBack = random.randint(1, 29)
 			if NewBack == 1:
 				LadderX = 1800
 				LadderY = -2
@@ -2444,6 +2444,17 @@ while run:
 				LadderX = 2150
 				LadderY = -2
 				EndX = 2300
+			if NewBack == 29:
+				LadderX = 8800
+				LadderY = -2
+				TunnelX = 4300
+				TunnelY = 10
+				Pipe2X = 6600
+				Pipe2Y = 10
+				Pipe1X = 2000
+				Pipe1Y = -2
+				EndX = 8990
+				
 
 		if BarrelX <= -500:
 			NewBarrel = random.randint(1, 5)
