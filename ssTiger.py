@@ -4,7 +4,7 @@ import random
 from os import path
 from pygame.locals import *
 from pygame import mixer
- 
+import sys
 
 os.chdir('tiger_images')
 
@@ -191,6 +191,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                sys.exit()
             if event.key == pygame.K_SPACE:
                player.shoot_bullet()
            
